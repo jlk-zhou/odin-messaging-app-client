@@ -18,9 +18,13 @@ const config = defineConfig({
       target: 'react',
       quoteStyle: 'double',
       autoCodeSplitting: true,
+      routeFileIgnorePattern: 'tests?|components?',
     }),
     viteReact(),
   ],
+  define: {
+    'import.meta.env.TEST': JSON.stringify(process.env.NODE_ENV === 'test'),
+  },
 })
 
 export default config

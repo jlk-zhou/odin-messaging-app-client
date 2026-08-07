@@ -7,6 +7,7 @@ import '../styles.css'
 
 export const Route = createRootRoute({
   component: RootComponent,
+  notFoundComponent: RootNotFoundComponent,
 })
 
 function RootComponent() {
@@ -24,6 +25,14 @@ function RootComponent() {
           },
         ]}
       />
+    </>
+  )
+}
+
+function RootNotFoundComponent() {
+  return (
+    <>
+      <h1>Sorry, but the page you've requested is nowhere to be found.</h1>
     </>
   )
 }

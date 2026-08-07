@@ -1,9 +1,9 @@
+@import 'tailwindcss';
 
-@import "tailwindcss";
-
-* {
-  box-sizing: border-box;
-}
+@import '@fontsource/roboto/300.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
 
 html,
 body,
@@ -12,6 +12,6 @@ body,
 }
 
 body {
+  font-family: 'Roboto', sans-serif;
   margin: 0;
 }
-

@@ -7,6 +7,7 @@ export function getRouter() {
     scrollRestoration: true,
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
+    defaultNotFoundComponent: DefaultNotFoundComponent,
   })
 
   return router
@@ -16,4 +17,12 @@ declare module '@tanstack/react-router' {
   interface Register {
     router: ReturnType<typeof getRouter>
   }
+}
+
+function DefaultNotFoundComponent() {
+  return (
+    <>
+      <h1>Sorry mate, but the page you've requested is nowhere to be found.</h1>
+    </>
+  )
 }

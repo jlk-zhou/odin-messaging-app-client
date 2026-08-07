@@ -8,7 +8,15 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
-export default function PasswordField({ confirming = false }) {
+interface PasswordFieldProps {
+  className?: string
+  confirming?: boolean
+}
+
+export default function PasswordField({
+  className = '',
+  confirming = false,
+}: PasswordFieldProps) {
   const [showPassword, setShowPassword] = useState(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -28,7 +36,7 @@ export default function PasswordField({ confirming = false }) {
   const name = confirming ? 'confirmPassword' : 'password'
 
   return (
-    <FormControl variant="outlined">
+    <FormControl variant="outlined" className={className}>
       <InputLabel htmlFor={id} required>
         {label}
       </InputLabel>

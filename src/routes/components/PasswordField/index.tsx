@@ -7,8 +7,9 @@ import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import type { OutlinedInputProps } from '@mui/material'
 
-interface PasswordFieldProps {
+interface PasswordFieldProps extends OutlinedInputProps {
   className?: string
   confirming?: boolean
 }
@@ -16,6 +17,7 @@ interface PasswordFieldProps {
 export default function PasswordField({
   className = '',
   confirming = false,
+  ...others
 }: PasswordFieldProps) {
   const [showPassword, setShowPassword] = useState(false)
 
@@ -41,6 +43,7 @@ export default function PasswordField({
         {label}
       </InputLabel>
       <OutlinedInput
+        {...others}
         id={id}
         name={name}
         type={showPassword ? 'text' : 'password'}

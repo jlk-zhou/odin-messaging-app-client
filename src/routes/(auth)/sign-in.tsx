@@ -4,13 +4,11 @@ import { Route as signUpRoute } from './sign-up'
 
 import * as _ from 'lodash-es'
 
-import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
-import TextField from '@mui/material/TextField'
 
-import PasswordField from '../components/PasswordField'
+import SignInForm from './components/SignInForm'
 import TabPanel from './components/TabPanel'
 
 export const Route = createFileRoute('/(auth)/sign-in')({
@@ -45,44 +43,5 @@ function SignIn() {
         </div>
       </Container>
     </>
-  )
-}
-
-interface SignInFormProps {
-  mode: 'email' | 'username'
-}
-
-function SignInForm({ mode }: SignInFormProps) {
-  return (
-    <form
-      aria-label={`${_.capitalize(mode)} Sign In Form`}
-      className="flex flex-col items-center gap-5 h-fit"
-    >
-      {mode === 'email' ? (
-        <>
-          <TextField
-            required
-            type="email"
-            label="Email"
-            name="email"
-            className="w-full"
-          />
-        </>
-      ) : (
-        <>
-          <TextField
-            required
-            type="text"
-            label="Username"
-            name="username"
-            className="w-full"
-          />
-        </>
-      )}
-      <PasswordField className="w-full" />
-      <Button type="submit" variant="contained" className="w-fit">
-        Sign In
-      </Button>
-    </form>
   )
 }

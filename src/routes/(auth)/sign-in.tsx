@@ -8,7 +8,8 @@ import Container from '@mui/material/Container'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 
-import SignInForm from './components/SignInForm'
+import EmailSignInForm from './components/EmailSignInForm'
+import UsernameSignInForm from './components/UsernameSignInForm'
 import TabPanel from './components/TabPanel'
 
 export const Route = createFileRoute('/(auth)/sign-in')({
@@ -32,10 +33,10 @@ function SignIn() {
             <Tab label="Sign In with Username" />
           </Tabs>
           <TabPanel value={value} index={0}>
-            <SignInForm mode={'email'} />
+            <EmailSignInForm />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <SignInForm mode={'username'} />
+            <UsernameSignInForm />
           </TabPanel>
           <p className="my-4 text-center">
             Don't have an account? <Link to={signUpRoute.to}>Sign Up</Link>

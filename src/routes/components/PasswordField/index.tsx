@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
@@ -29,12 +29,12 @@ export default function PasswordField({
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
-    event.preventDefault
+    event.preventDefault()
   }
   const handleMouseUpPassword = (
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
-    event.preventDefault
+    event.preventDefault()
   }
 
   const label = confirming ? 'Confirm Password' : 'Password'
@@ -54,7 +54,9 @@ export default function PasswordField({
       <OutlinedInput
         {...others}
         aria-invalid={fieldState?.invalid}
-        slotProps={{ input: { minLength: 8, maxLength: 50 } }}
+        slotProps={{
+          input: { minLength: 8, maxLength: 50 },
+        }}
         required
         id={id}
         name={name}

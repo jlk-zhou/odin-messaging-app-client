@@ -35,6 +35,7 @@ export default function SignInForm({ mode }: SignInModes) {
           render={({ field }) => (
             <TextField
               {...field}
+              slotProps={{ htmlInput: { minLength: 5, maxLength: 50 } }}
               required
               type="email"
               label="Email"
@@ -50,6 +51,7 @@ export default function SignInForm({ mode }: SignInModes) {
           render={({ field }) => (
             <TextField
               {...field}
+              slotProps={{ htmlInput: { minLength: 3, maxLength: 30 } }}
               required
               type="text"
               label="Username"

@@ -10,11 +10,18 @@ describe('Sign up page', () => {
     renderTestRouter('/sign-up')
   })
 
-  it('has a heading', () => {
-    const heading = screen.findByRole('heading', {
+  it('has a heading', async () => {
+    const heading = await screen.findByRole('heading', {
       name: /create(?: an)? account|sign up/i,
     })
     expect(heading).toBeInTheDocument()
+  })
+
+  it('has a sign up form', async () => {
+    const signUpForm = await screen.findByRole('form', {
+      name: /sign up form/i,
+    })
+    expect(signUpForm).toBeInTheDocument()
   })
 
   describe('Sign in page redirect link', () => {

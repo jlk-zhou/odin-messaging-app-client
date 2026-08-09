@@ -51,6 +51,17 @@ describe('Email sign in form', () => {
       await user.keyboard('myname@example.com')
       expect(emailInput).toHaveValue('myname@example.com')
     })
+
+    it('has browser input validation', () => {
+      expect(emailInput).toHaveAttribute(
+        'minlength',
+        expect.toSatisfy((val: string) => Number(val) >= 0),
+      )
+      expect(emailInput).toHaveAttribute(
+        'maxlength',
+        expect.toSatisfy((val: string) => Number(val) <= 50),
+      )
+    })
   })
 
   describe('Password input', () => {
@@ -118,6 +129,17 @@ describe('Username sign in form', () => {
       expect(usernameInput).toHaveFocus()
       await user.keyboard('myusername')
       expect(usernameInput).toHaveValue('myusername')
+    })
+
+    it('has browser input validation', () => {
+      expect(usernameInput).toHaveAttribute(
+        'minlength',
+        expect.toSatisfy((val: string) => Number(val) >= 0),
+      )
+      expect(usernameInput).toHaveAttribute(
+        'maxlength',
+        expect.toSatisfy((val: string) => Number(val) <= 50),
+      )
     })
   })
 

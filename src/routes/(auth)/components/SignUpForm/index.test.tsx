@@ -27,7 +27,7 @@ describe('Sign up form', () => {
       within(signUpForm).getByLabelText(/^confirm password/i)
   })
 
-  it('exists', () => {
+  it('renders', () => {
     expect(signUpForm).toBeInTheDocument()
   })
 

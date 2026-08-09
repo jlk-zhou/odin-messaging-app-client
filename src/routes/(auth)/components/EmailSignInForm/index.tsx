@@ -13,6 +13,10 @@ export default function EmailSignInForm() {
   const form = useForm<z.infer<typeof emailSignInSchema>>({
     resolver: zodResolver(emailSignInSchema),
     mode: 'onTouched',
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   })
 
   function onSubmit(data: z.infer<typeof emailSignInSchema>) {
@@ -43,7 +47,7 @@ export default function EmailSignInForm() {
               htmlInput: {
                 minLength: 5,
                 maxLength: 50,
-                ariaInvalid: fieldState.invalid,
+                'aria-invalid': fieldState.invalid,
               },
             }}
           />

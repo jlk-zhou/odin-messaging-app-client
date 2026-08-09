@@ -21,7 +21,7 @@ export default function PasswordField({
   className = '',
   confirming = false,
   fieldState = undefined,
-  ...others
+  ...props
 }: PasswordFieldProps) {
   const [showPassword, setShowPassword] = useState(false)
 
@@ -39,6 +39,7 @@ export default function PasswordField({
 
   const label = confirming ? 'Confirm Password' : 'Password'
   const id = confirming ? 'confirm-password' : 'password'
+  const helperTextId = `${id}-error`
   const name = confirming ? 'confirmPassword' : 'password'
 
   return (
@@ -52,16 +53,20 @@ export default function PasswordField({
         {label}
       </InputLabel>
       <OutlinedInput
-        {...others}
+        {...props}
         aria-invalid={fieldState?.invalid}
         slotProps={{
-          input: { minLength: 8, maxLength: 50 },
+          input: {
+            minLength: 8,
+            maxLength: 50,
+            'aria-describedby': helperTextId,
+          },
         }}
         required
         id={id}
         name={name}
         type={showPassword ? 'text' : 'password'}
-        label={`${label} *`}
+        label={`${label}`}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
@@ -77,7 +82,9 @@ export default function PasswordField({
         }
       />
       {fieldState?.invalid && (
-        <FormHelperText>{fieldState.error?.message}</FormHelperText>
+        <FormHelperText id={helperTextId}>
+          {fieldState.error?.message}
+        </FormHelperText>
       )}
     </FormControl>
   )

@@ -13,6 +13,10 @@ export default function usernameSignInForm() {
   const form = useForm<z.infer<typeof usernameSignInSchema>>({
     resolver: zodResolver(usernameSignInSchema),
     mode: 'onTouched',
+    defaultValues: {
+      username: '',
+      password: '',
+    },
   })
 
   function onSubmit(data: z.infer<typeof usernameSignInSchema>) {
@@ -43,7 +47,7 @@ export default function usernameSignInForm() {
               htmlInput: {
                 minLength: 3,
                 maxLength: 30,
-                ariaInvalid: fieldState.invalid,
+                'aria-invalid': fieldState.invalid,
               },
             }}
           />

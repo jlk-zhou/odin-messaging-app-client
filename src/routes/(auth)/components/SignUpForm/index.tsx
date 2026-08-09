@@ -12,6 +12,13 @@ export default function SignUpForm() {
   const form = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
     mode: 'onTouched',
+    defaultValues: {
+      name: '',
+      email: '',
+      username: '',
+      password: '',
+      confirmPassword: '',
+    },
   })
 
   function onSubmit(data: z.infer<typeof signUpFormSchema>) {
@@ -41,7 +48,7 @@ export default function SignUpForm() {
               htmlInput: {
                 minLength: 3,
                 maxLength: 30,
-                ariaInvalid: fieldState.invalid,
+                'aria-invalid': fieldState.invalid,
               },
             }}
           />
@@ -65,7 +72,7 @@ export default function SignUpForm() {
               htmlInput: {
                 minLength: 5,
                 maxLength: 40,
-                ariaInvalid: fieldState.invalid,
+                'aria-invalid': fieldState.invalid,
               },
             }}
           />
@@ -89,7 +96,8 @@ export default function SignUpForm() {
               htmlInput: {
                 minLength: 3,
                 maxLength: 30,
-                ariaInvalid: fieldState.invalid,
+                value: field.value,
+                'aria-invalid': fieldState.invalid,
               },
             }}
           />

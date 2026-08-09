@@ -19,7 +19,7 @@ function SignUp() {
         </h1>
         <div className="h-6/7">
           <SignUpForm />
-          <p className="my-4">
+          <p className="my-4 text-center">
             Already have an account? <Link to={signInRoute.to}>Sign In</Link>
           </p>
         </div>

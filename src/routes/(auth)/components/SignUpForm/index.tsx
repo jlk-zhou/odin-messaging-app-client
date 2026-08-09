@@ -31,10 +31,10 @@ export default function SignUpForm() {
         render={({ field }) => (
           <TextField
             {...field}
+            slotProps={{ htmlInput: { minLength: 3, maxLength: 30 } }}
             required
             type="text"
             label="Name"
-            name="name"
             className="w-full"
           />
         )}
@@ -45,6 +45,7 @@ export default function SignUpForm() {
         render={({ field }) => (
           <TextField
             {...field}
+            slotProps={{ htmlInput: { minLength: 5, maxLength: 40 } }}
             required
             type="email"
             label="Email"
@@ -59,6 +60,7 @@ export default function SignUpForm() {
         render={({ field }) => (
           <TextField
             {...field}
+            slotProps={{ htmlInput: { minLength: 3, maxLength: 30 } }}
             required
             type="text"
             label="Username"

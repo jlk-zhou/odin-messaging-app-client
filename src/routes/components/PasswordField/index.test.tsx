@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { userEvent } from '@testing-library/user-event'
 import PasswordFieldComponent from './index'
-import { render, screen, within } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 describe('Password Field Component', () => {
@@ -35,6 +35,17 @@ describe('Password Field Component', () => {
     expect(passwordField).toHaveFocus()
     await user.keyboard('VerySecurePw!123')
     expect(passwordField).toHaveValue('VerySecurePw!123')
+  })
+
+  it('has browser input validation', () => {
+    expect(passwordField).toHaveAttribute(
+      'minlength',
+      expect.toSatisfy((val: string) => Number(val) >= 0),
+    )
+    expect(passwordField).toHaveAttribute(
+      'maxlength',
+      expect.toSatisfy((val: string) => Number(val) <= 50),
+    )
   })
 })
 

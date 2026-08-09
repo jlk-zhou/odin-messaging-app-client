@@ -44,6 +44,8 @@ export default function PasswordField({
       </InputLabel>
       <OutlinedInput
         {...others}
+        slotProps={{ input: { minLength: 8, maxLength: 50 } }}
+        required
         id={id}
         name={name}
         type={showPassword ? 'text' : 'password'}

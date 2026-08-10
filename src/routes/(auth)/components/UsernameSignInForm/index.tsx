@@ -1,38 +1,55 @@
-import type z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as _ from 'lodash-es'
-import { Controller, useForm } from 'react-hook-form'
+import { useNavigate } from "@tanstack/react-router";
+import { authClient } from "#/lib/auth-client";
 
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type z from "zod";
 
-import { usernameSignInSchema } from './schema'
-import PasswordField from '#/routes/components/PasswordField'
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+
+import * as _ from "lodash-es";
+
+import { usernameSignInSchema } from "./schema";
+import PasswordField from "#/routes/components/PasswordField";
 
 interface UsernameSignInFormProps {
-  className?: string
+  className?: string;
 }
 
 export default function usernameSignInForm({
   className,
 }: UsernameSignInFormProps) {
+  const navigate = useNavigate({ from: "/sign-in" });
   const form = useForm<z.infer<typeof usernameSignInSchema>>({
     resolver: zodResolver(usernameSignInSchema),
-    mode: 'onTouched',
+    mode: "onTouched",
     defaultValues: {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
     },
-  })
+  });
 
-  function onSubmit(data: z.infer<typeof usernameSignInSchema>) {
-    console.log(data)
+  async function onSubmit(reqBody: z.infer<typeof usernameSignInSchema>) {
+    await authClient.signIn.username(
+      {
+        ...reqBody,
+      },
+      {
+        onSuccess: () => {
+          navigate({ to: "/" });
+        },
+        onError: (ctx) => {
+          console.log(ctx.error.message);
+        },
+      },
+    );
   }
 
   return (
     <form
-      aria-label={'Username Sign In Form'}
-      className={`flex flex-col items-center gap-5 h-fit ${className}`}
+      aria-label={"Username Sign In Form"}
+      className={`flex h-fit flex-col items-center gap-5 ${className}`}
       onSubmit={form.handleSubmit(onSubmit)}
     >
       <Controller
@@ -53,14 +70,14 @@ export default function usernameSignInForm({
               htmlInput: {
                 minLength: 3,
                 maxLength: 30,
-                'aria-invalid': fieldState.invalid,
+                "aria-invalid": fieldState.invalid,
               },
             }}
           />
         )}
       />
       <Controller
-        name={'password'}
+        name={"password"}
         control={form.control}
         render={({ field, fieldState }) => (
           <PasswordField
@@ -74,5 +91,5 @@ export default function usernameSignInForm({
         Sign In
       </Button>
     </form>
-  )
+  );
 }

@@ -1,38 +1,54 @@
-import { useForm, Controller } from 'react-hook-form'
-import type * as z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigate } from "@tanstack/react-router";
 
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type * as z from "zod";
+import { authClient } from "@/lib/auth-client";
 
-import PasswordField from '#/routes/components/PasswordField'
-import { signUpFormSchema } from './schema'
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+
+import PasswordField from "#/routes/components/PasswordField";
+import { signUpFormSchema } from "./schema";
 
 interface SignUpFormProps {
-  className?: string
+  className?: string;
 }
 
-export default function SignUpForm({ className = '' }: SignUpFormProps) {
+export default function SignUpForm({ className = "" }: SignUpFormProps) {
+  const navigate = useNavigate({ from: "/sign-up" });
   const form = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
-    mode: 'onTouched',
+    mode: "onTouched",
     defaultValues: {
-      name: '',
-      email: '',
-      username: '',
-      password: '',
-      confirmPassword: '',
+      name: "",
+      email: "",
+      username: "",
+      password: "",
+      confirmPassword: "",
     },
-  })
+  });
 
-  function onSubmit(data: z.infer<typeof signUpFormSchema>) {
-    console.log(data)
+  async function onSubmit(reqBody: z.infer<typeof signUpFormSchema>) {
+    await authClient.signUp.email(
+      {
+        ...reqBody,
+      },
+      {
+        onSuccess: () => {
+          navigate({ to: "/" });
+        },
+        onError: (ctx) => {
+          console.log(ctx.error.message);
+        },
+      },
+    );
   }
 
   return (
     <form
       aria-label="Sign Up Form"
-      className={`flex flex-col items-center gap-5 h-fit ${className}`}
+      className={`flex h-fit flex-col items-center gap-5 ${className}`}
       onSubmit={form.handleSubmit(onSubmit)}
     >
       <Controller
@@ -52,7 +68,7 @@ export default function SignUpForm({ className = '' }: SignUpFormProps) {
               htmlInput: {
                 minLength: 3,
                 maxLength: 30,
-                'aria-invalid': fieldState.invalid,
+                "aria-invalid": fieldState.invalid,
               },
             }}
           />
@@ -76,7 +92,7 @@ export default function SignUpForm({ className = '' }: SignUpFormProps) {
               htmlInput: {
                 minLength: 5,
                 maxLength: 40,
-                'aria-invalid': fieldState.invalid,
+                "aria-invalid": fieldState.invalid,
               },
             }}
           />
@@ -101,7 +117,7 @@ export default function SignUpForm({ className = '' }: SignUpFormProps) {
                 minLength: 3,
                 maxLength: 30,
                 value: field.value,
-                'aria-invalid': fieldState.invalid,
+                "aria-invalid": fieldState.invalid,
               },
             }}
           />
@@ -134,5 +150,5 @@ export default function SignUpForm({ className = '' }: SignUpFormProps) {
         Sign Up
       </Button>
     </form>
-  )
+  );
 }

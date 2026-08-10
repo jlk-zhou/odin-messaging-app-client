@@ -1,40 +1,57 @@
-import type z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as _ from 'lodash-es'
-import { Controller, useForm } from 'react-hook-form'
+import { useNavigate } from "@tanstack/react-router";
+import { authClient } from "#/lib/auth-client";
 
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type z from "zod";
 
-import { emailSignInSchema } from './schema'
-import PasswordField from '#/routes/components/PasswordField'
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+
+import * as _ from "lodash-es";
+
+import { emailSignInSchema } from "./schema";
+import PasswordField from "#/routes/components/PasswordField";
 
 interface EmailSignInFormProps {
-  className?: string
+  className?: string;
 }
 
 export default function EmailSignInForm({ className }: EmailSignInFormProps) {
+  const navigate = useNavigate({ from: "/sign-in" });
   const form = useForm<z.infer<typeof emailSignInSchema>>({
     resolver: zodResolver(emailSignInSchema),
-    mode: 'onTouched',
+    mode: "onTouched",
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
-  })
+  });
 
-  function onSubmit(data: z.infer<typeof emailSignInSchema>) {
-    console.log(data)
+  async function onSubmit(reqBody: z.infer<typeof emailSignInSchema>) {
+    await authClient.signIn.email(
+      {
+        ...reqBody,
+      },
+      {
+        onSuccess: () => {
+          navigate({ to: "/" });
+        },
+        onError: (ctx) => {
+          console.log(ctx.error.message);
+        },
+      },
+    );
   }
 
   return (
     <form
-      aria-label={'Email Sign In Form'}
-      className={`flex flex-col items-center gap-5 h-fit ${className}`}
+      aria-label={"Email Sign In Form"}
+      className={`flex h-fit flex-col items-center gap-5 ${className}`}
       onSubmit={form.handleSubmit(onSubmit)}
     >
       <Controller
-        name={'email'}
+        name={"email"}
         control={form.control}
         render={({ field, fieldState }) => (
           <TextField
@@ -51,14 +68,14 @@ export default function EmailSignInForm({ className }: EmailSignInFormProps) {
               htmlInput: {
                 minLength: 5,
                 maxLength: 50,
-                'aria-invalid': fieldState.invalid,
+                "aria-invalid": fieldState.invalid,
               },
             }}
           />
         )}
       />
       <Controller
-        name={'password'}
+        name={"password"}
         control={form.control}
         render={({ field, fieldState }) => (
           <PasswordField
@@ -72,5 +89,5 @@ export default function EmailSignInForm({ className }: EmailSignInFormProps) {
         Sign In
       </Button>
     </form>
-  )
+  );
 }

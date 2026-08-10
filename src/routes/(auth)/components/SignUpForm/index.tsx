@@ -8,7 +8,11 @@ import TextField from '@mui/material/TextField'
 import PasswordField from '#/routes/components/PasswordField'
 import { signUpFormSchema } from './schema'
 
-export default function SignUpForm() {
+interface SignUpFormProps {
+  className?: string
+}
+
+export default function SignUpForm({ className = '' }: SignUpFormProps) {
   const form = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
     mode: 'onTouched',
@@ -28,7 +32,7 @@ export default function SignUpForm() {
   return (
     <form
       aria-label="Sign Up Form"
-      className="flex flex-col items-center gap-5 w-100 h-fit"
+      className={`flex flex-col items-center gap-5 h-fit ${className}`}
       onSubmit={form.handleSubmit(onSubmit)}
     >
       <Controller
@@ -48,6 +52,7 @@ export default function SignUpForm() {
               htmlInput: {
                 minLength: 3,
                 maxLength: 30,
+                autoFocus: true,
                 'aria-invalid': fieldState.invalid,
               },
             }}

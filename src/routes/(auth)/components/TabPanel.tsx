@@ -5,13 +5,19 @@ interface TabPanelProps {
   children?: React.ReactNode
   index: number
   value: number
+  className?: string
 }
 
 export default function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props
+  const { children, value, index, className = '', ...other } = props
 
   return (
-    <div role="tabpanel" hidden={value !== index} {...other}>
+    <div
+      className={className}
+      role="tabpanel"
+      hidden={value !== index}
+      {...other}
+    >
       {value === index && <Box>{children}</Box>}
     </div>
   )

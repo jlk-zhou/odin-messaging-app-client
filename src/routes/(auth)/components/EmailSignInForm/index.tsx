@@ -9,7 +9,11 @@ import TextField from '@mui/material/TextField'
 import { emailSignInSchema } from './schema'
 import PasswordField from '#/routes/components/PasswordField'
 
-export default function EmailSignInForm() {
+interface EmailSignInFormProps {
+  className?: string
+}
+
+export default function EmailSignInForm({ className }: EmailSignInFormProps) {
   const form = useForm<z.infer<typeof emailSignInSchema>>({
     resolver: zodResolver(emailSignInSchema),
     mode: 'onTouched',
@@ -26,7 +30,7 @@ export default function EmailSignInForm() {
   return (
     <form
       aria-label={'Email Sign In Form'}
-      className="flex flex-col items-center gap-5 h-fit"
+      className={`flex flex-col items-center gap-5 h-fit ${className}`}
       onSubmit={form.handleSubmit(onSubmit)}
     >
       <Controller

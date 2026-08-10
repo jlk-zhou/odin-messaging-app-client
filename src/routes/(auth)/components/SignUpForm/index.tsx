@@ -52,7 +52,6 @@ export default function SignUpForm({ className = '' }: SignUpFormProps) {
               htmlInput: {
                 minLength: 3,
                 maxLength: 30,
-                autoFocus: true,
                 'aria-invalid': fieldState.invalid,
               },
             }}

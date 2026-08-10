@@ -7,8 +7,8 @@ const stringError = 'Please enter a '
 export const usernameSignInSchema = z.object({
   username: z
     .string(`${stringError} username.`)
-    .min(5, `Email ${minLengthError(5)}`)
-    .max(50, `Email ${maxLengthError(50)}`)
+    .min(5, `Username ${minLengthError(5)}`)
+    .max(50, `Username ${maxLengthError(50)}`)
     .trim(),
   password: z
     .string(`${stringError} password.`)

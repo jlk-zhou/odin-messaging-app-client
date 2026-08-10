@@ -9,7 +9,13 @@ import TextField from '@mui/material/TextField'
 import { usernameSignInSchema } from './schema'
 import PasswordField from '#/routes/components/PasswordField'
 
-export default function usernameSignInForm() {
+interface UsernameSignInFormProps {
+  className?: string
+}
+
+export default function usernameSignInForm({
+  className,
+}: UsernameSignInFormProps) {
   const form = useForm<z.infer<typeof usernameSignInSchema>>({
     resolver: zodResolver(usernameSignInSchema),
     mode: 'onTouched',
@@ -26,7 +32,7 @@ export default function usernameSignInForm() {
   return (
     <form
       aria-label={'Username Sign In Form'}
-      className="flex flex-col items-center gap-5 h-fit"
+      className={`flex flex-col items-center gap-5 h-fit ${className}`}
       onSubmit={form.handleSubmit(onSubmit)}
     >
       <Controller

@@ -62,11 +62,49 @@ describe('Email sign in form', () => {
         expect.toSatisfy((val: string) => Number(val) <= 50),
       )
     })
+
+    it('becomes invalid and gives error for invalid inputs on touch', async () => {
+      const user = await userEvent.setup()
+
+      await user.click(emailInput)
+      expect(emailInput).toHaveFocus()
+
+      await user.click(document.body)
+      expect(emailInput).not.toHaveFocus()
+      expect(emailInput).toBeInvalid()
+      expect(emailInput).toHaveAccessibleDescription(/email/i)
+
+      await user.click(emailInput)
+      await user.keyboard('someone')
+      expect(emailInput).toBeInvalid()
+      expect(emailInput).toHaveAccessibleDescription(/email/i)
+
+      await user.keyboard('@example.com')
+      expect(emailInput).not.toBeInvalid()
+      expect(emailInput).not.toHaveAccessibleDescription()
+    })
   })
 
   describe('Password input', () => {
     it('exists', () => {
       expect(passwordInput).toBeInTheDocument()
+    })
+
+    it('becomes invalid for invalid passwords', async () => {
+      const user = await userEvent.setup()
+
+      await user.click(passwordInput)
+      expect(passwordInput).toHaveFocus()
+
+      await user.click(document.body)
+      expect(passwordInput).not.toHaveFocus()
+      expect(passwordInput).toBeInvalid()
+      expect(passwordInput).toHaveAccessibleDescription(/password/i)
+
+      await user.click(passwordInput)
+      await user.keyboard('TightYeah!123')
+      expect(passwordInput).not.toBeInvalid()
+      expect(passwordInput).not.toHaveAccessibleDescription()
     })
   })
 

@@ -196,7 +196,7 @@ describe('Sign up form', () => {
       expect(passwordInput).toBeInTheDocument()
     })
 
-    it('becomes invalid and gives error for invalid passwords on touch', async () => {
+    it('becomes invalid for invalid passwords', async () => {
       const user = await userEvent.setup()
 
       await user.click(passwordInput)

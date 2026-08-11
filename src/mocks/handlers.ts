@@ -1,4 +1,4 @@
-import { http, HttpResponse } from "msw";
+import { http, delay, HttpResponse } from "msw";
 import * as cookie from "cookie";
 import { addDays, subDays, subSeconds } from "date-fns";
 
@@ -98,6 +98,7 @@ export const authHandlers = [
     `${process.env.SERVER_URL}/api/auth/sign-up/email`,
     async ({ request }) => {
       // Create a new user instance
+      await delay(1000);
       const body = await request.clone().json();
 
       const newUser = existingUsers.find((user) => {
@@ -140,6 +141,7 @@ export const authHandlers = [
   http.post<{ token: string }, EmailCredentials>(
     `${process.env.SERVER_URL}/api/auth/sign-in/email`,
     async ({ request }) => {
+      await delay(1000);
       const credentials = await request.clone().json();
       // Check user credential with mock user
       const userSigningIn = existingUsers.find((user) => {
@@ -175,6 +177,7 @@ export const authHandlers = [
   http.post<{ token: string }, UsernameCredentials>(
     `${process.env.SERVER_URL}/api/auth/sign-in/email`,
     async ({ request }) => {
+      await delay(1000);
       const credentials = await request.clone().json();
       // Check user credential with mock user
       const userSigningIn = existingUsers.find((user) => {
@@ -210,6 +213,7 @@ export const authHandlers = [
   http.get(
     `${process.env.SERVER_URL}/api/auth/get-session`,
     async ({ cookies }) => {
+      await delay(1000);
       // Use the cookie set in other routes to find current user
       const currentUser = existingUsers.find((user) => {
         return user.token === cookies.sessionToken;
@@ -230,6 +234,7 @@ export const authHandlers = [
 
   // Sign out
   http.post(`${process.env.SERVER_URL}/api/auth/sign-out`, async () => {
+    await delay(1000);
     // Clear all authentication-related cookies
     const clearSessionTokenCookie: cookie.SetCookie = {
       name: "sessionToken",

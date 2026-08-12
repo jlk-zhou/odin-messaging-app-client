@@ -162,8 +162,13 @@ export default function SignUpForm({ className = "" }: SignUpFormProps) {
           />
         )}
       />
-      <Button type="submit" variant="contained" className="w-fit">
-        Sign Up
+      <Button
+        loading={form.formState.isSubmitting}
+        type="submit"
+        variant="contained"
+        className="w-30"
+      >
+        Sign Up{" "}
       </Button>
     </form>
   );

@@ -59,7 +59,12 @@ export default function usernameSignInForm({
           />
         )}
       />
-      <Button type="submit" variant="contained" className="w-fit">
+      <Button
+        loading={form.formState.isSubmitting}
+        type="submit"
+        variant="contained"
+        className={`w-30`}
+      >
         Sign In
       </Button>
     </form>

@@ -1,10 +1,9 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { screen, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import "@testing-library/jest-dom";
 
 import SignUpFormComponent from ".";
-
-import "@testing-library/jest-dom";
 import { renderComponent } from "#/tests/file-route-utils";
 
 describe("Sign up form", () => {

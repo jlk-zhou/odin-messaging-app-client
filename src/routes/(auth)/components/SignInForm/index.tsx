@@ -7,33 +7,35 @@ import * as _ from "lodash-es";
 
 import PasswordField from "#/routes/components/PasswordField";
 
-interface UsernameSignInFormProps {
+interface SignInFormProps {
   className?: string;
+  mode: "email" | "username";
   form: any;
   onSubmit: any;
 }
 
-export default function usernameSignInForm({
+export default function SignInForm({
   className,
+  mode,
   form,
   onSubmit,
-}: UsernameSignInFormProps) {
+}: SignInFormProps) {
   return (
     <form
-      aria-label={"Username Sign In Form"}
+      aria-label={`${_.capitalize(mode)} Sign In Form`}
       className={`flex h-fit flex-col items-center gap-5 ${className}`}
       onSubmit={form.handleSubmit(onSubmit)}
     >
       <Controller
-        name="username"
+        name={mode}
         control={form.control}
         render={({ field, fieldState }) => (
           <TextField
             {...field}
             required
-            type="text"
-            label="Username"
-            name="username"
+            type={mode === "email" ? "email" : "text"}
+            label={_.capitalize(mode)}
+            name={mode}
             className="w-full"
             error={fieldState.invalid}
             helperText={fieldState.invalid && fieldState.error?.message}

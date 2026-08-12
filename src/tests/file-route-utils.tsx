@@ -30,6 +30,8 @@ export function renderComponent(
 ) {
   const rootRoute = createRootRoute({
     component: () => component,
+    notFoundComponent: () => <p>Not Found</p>,
+    errorComponent: () => <p>Error</p>,
   });
   const router = createRouter({
     routeTree: rootRoute,

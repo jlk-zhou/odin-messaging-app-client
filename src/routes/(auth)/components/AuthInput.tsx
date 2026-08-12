@@ -1,0 +1,57 @@
+import { Controller } from "react-hook-form";
+import * as _ from "lodash-es";
+import TextField from "@mui/material/TextField";
+
+import PasswordField from "#/routes/components/PasswordField";
+
+interface AuthInputProps {
+  className?: string;
+  entry: "name" | "email" | "username" | "password" | "confirmPassword";
+  form: any;
+  required?: boolean;
+}
+
+export default function AuthInput({
+  className = "",
+  entry,
+  form,
+  required = true,
+}: AuthInputProps) {
+  return (
+    <Controller
+      name={entry}
+      control={form.control}
+      render={({ field, fieldState }) => (
+        <>
+          {entry === "password" || entry === "confirmPassword" ? (
+            <PasswordField
+              {...field}
+              fieldState={fieldState}
+              className={`w-full ${className}`}
+              confirming={entry === "confirmPassword" ? true : false}
+            />
+          ) : (
+            <TextField
+              {...field}
+              required={required}
+              type={entry === "name" || entry === "username" ? "text" : "email"}
+              label={_.capitalize(entry)}
+              className={`w-full ${className}`}
+              data-invalid={fieldState.invalid}
+              error={fieldState.invalid}
+              helperText={fieldState.invalid && fieldState.error?.message}
+              slotProps={{
+                htmlInput: {
+                  minLength: entry === "email" ? 5 : 3,
+                  maxLength: entry === "email" ? 50 : 30,
+                  value: field.value,
+                  "aria-invalid": fieldState.invalid,
+                },
+              }}
+            />
+          )}
+        </>
+      )}
+    />
+  );
+}

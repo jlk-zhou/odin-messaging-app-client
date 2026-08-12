@@ -20,8 +20,8 @@ export const emailSignInSchema = z.object({
 export const usernameSignInSchema = z.object({
   username: z
     .string(`${stringError} username.`)
-    .min(5, `Username ${minLengthError(5)}`)
-    .max(50, `Username ${maxLengthError(50)}`)
+    .min(5, `Username ${minLengthError(3)}`)
+    .max(50, `Username ${maxLengthError(30)}`)
     .trim(),
   password: z
     .string(`${stringError} password.`)

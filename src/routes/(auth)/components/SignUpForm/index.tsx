@@ -3,11 +3,12 @@ import { useNavigate } from "@tanstack/react-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type * as z from "zod";
-import { authClient } from "@/lib/auth-client";
 
+import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
+import { authClient } from "#/lib/auth-client";
 import PasswordField from "#/routes/components/PasswordField";
 import { signUpFormSchema } from "./schema";
 
@@ -39,7 +40,17 @@ export default function SignUpForm({ className = "" }: SignUpFormProps) {
           navigate({ to: "/" });
         },
         onError: (ctx) => {
-          console.log(ctx.error.message);
+          switch (true) {
+            case /username/i.test(ctx.error.code):
+              form.setError("username", ctx.error);
+              break;
+            case /email/i.test(ctx.error.code):
+              form.setError("email", ctx.error);
+              break;
+            default:
+              form.setError("root.serverError", ctx.error);
+              break;
+          }
         },
       },
     );
@@ -51,6 +62,11 @@ export default function SignUpForm({ className = "" }: SignUpFormProps) {
       className={`flex h-fit flex-col items-center gap-5 ${className}`}
       onSubmit={form.handleSubmit(onSubmit)}
     >
+      {form.formState.errors.root?.serverError && (
+        <Alert severity="error">
+          {form.formState.errors.root.serverError.message}
+        </Alert>
+      )}
       <Controller
         name="name"
         control={form.control}
@@ -68,30 +84,6 @@ export default function SignUpForm({ className = "" }: SignUpFormProps) {
               htmlInput: {
                 minLength: 3,
                 maxLength: 30,
-                "aria-invalid": fieldState.invalid,
-              },
-            }}
-          />
-        )}
-      />
-      <Controller
-        name="email"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <TextField
-            {...field}
-            required
-            type="email"
-            label="Email"
-            name="email"
-            className="w-full"
-            error={fieldState.invalid}
-            helperText={fieldState.invalid && fieldState.error?.message}
-            data-invalid={fieldState.invalid}
-            slotProps={{
-              htmlInput: {
-                minLength: 5,
-                maxLength: 40,
                 "aria-invalid": fieldState.invalid,
               },
             }}
@@ -117,6 +109,30 @@ export default function SignUpForm({ className = "" }: SignUpFormProps) {
                 minLength: 3,
                 maxLength: 30,
                 value: field.value,
+                "aria-invalid": fieldState.invalid,
+              },
+            }}
+          />
+        )}
+      />
+      <Controller
+        name="email"
+        control={form.control}
+        render={({ field, fieldState }) => (
+          <TextField
+            {...field}
+            required
+            type="email"
+            label="Email"
+            name="email"
+            className="w-full"
+            error={fieldState.invalid}
+            helperText={fieldState.invalid && fieldState.error?.message}
+            data-invalid={fieldState.invalid}
+            slotProps={{
+              htmlInput: {
+                minLength: 5,
+                maxLength: 40,
                 "aria-invalid": fieldState.invalid,
               },
             }}

@@ -1,49 +1,23 @@
-import { useNavigate } from "@tanstack/react-router";
-import { authClient } from "#/lib/auth-client";
-
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import type z from "zod";
+import { Controller } from "react-hook-form";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
 import * as _ from "lodash-es";
 
-import { emailSignInSchema } from "./schema";
 import PasswordField from "#/routes/components/PasswordField";
 
 interface EmailSignInFormProps {
   className?: string;
+  form: any;
+  onSubmit: any;
 }
 
-export default function EmailSignInForm({ className }: EmailSignInFormProps) {
-  const navigate = useNavigate({ from: "/sign-in" });
-  const form = useForm<z.infer<typeof emailSignInSchema>>({
-    resolver: zodResolver(emailSignInSchema),
-    mode: "onTouched",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  async function onSubmit(reqBody: z.infer<typeof emailSignInSchema>) {
-    await authClient.signIn.email(
-      {
-        ...reqBody,
-      },
-      {
-        onSuccess: () => {
-          navigate({ to: "/" });
-        },
-        onError: (ctx) => {
-          console.log(ctx.error.message);
-        },
-      },
-    );
-  }
-
+export default function EmailSignInForm({
+  className,
+  form,
+  onSubmit,
+}: EmailSignInFormProps) {
   return (
     <form
       aria-label={"Email Sign In Form"}

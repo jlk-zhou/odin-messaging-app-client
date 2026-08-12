@@ -1,51 +1,23 @@
-import { useNavigate } from "@tanstack/react-router";
-import { authClient } from "#/lib/auth-client";
-
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import type z from "zod";
+import { Controller } from "react-hook-form";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
 import * as _ from "lodash-es";
 
-import { usernameSignInSchema } from "./schema";
 import PasswordField from "#/routes/components/PasswordField";
 
 interface UsernameSignInFormProps {
   className?: string;
+  form: any;
+  onSubmit: any;
 }
 
 export default function usernameSignInForm({
   className,
+  form,
+  onSubmit,
 }: UsernameSignInFormProps) {
-  const navigate = useNavigate({ from: "/sign-in" });
-  const form = useForm<z.infer<typeof usernameSignInSchema>>({
-    resolver: zodResolver(usernameSignInSchema),
-    mode: "onTouched",
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
-
-  async function onSubmit(reqBody: z.infer<typeof usernameSignInSchema>) {
-    await authClient.signIn.username(
-      {
-        ...reqBody,
-      },
-      {
-        onSuccess: () => {
-          navigate({ to: "/" });
-        },
-        onError: (ctx) => {
-          console.log(ctx.error.message);
-        },
-      },
-    );
-  }
-
   return (
     <form
       aria-label={"Username Sign In Form"}

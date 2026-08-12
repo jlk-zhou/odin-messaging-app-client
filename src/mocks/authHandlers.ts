@@ -95,10 +95,10 @@ export const authHandlers = [
   // Instead it will only give you a mock new user called Newbie!
   // So make sure to hit this route with Newbie's details during test!
   http.post<{ token: string }, User>(
-    `${process.env.SERVER_URL}/api/auth/sign-up/email`,
+    `http://localhost:3000/api/auth/sign-up/email`,
     async ({ request }) => {
+      console.log("Hit mock server");
       // Create a new user instance
-      await delay(1000);
       const body = await request.clone().json();
 
       const newUser = existingUsers.find((user) => {
@@ -113,6 +113,7 @@ export const authHandlers = [
       } else if (newUser) {
         // We found newbie!
         const newCookie = createSessionCookie(newUser.token);
+        console.log("Creating new user...");
         return HttpResponse.json(
           {
             token: newUser.token,

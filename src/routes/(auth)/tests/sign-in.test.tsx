@@ -1,4 +1,4 @@
-import { renderTestRouter } from "#/tests/file-route-utils.jsx";
+import { renderTestRouter } from "#/tests/utils.js";
 import { screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 

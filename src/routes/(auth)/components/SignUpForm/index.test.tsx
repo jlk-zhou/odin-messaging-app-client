@@ -4,7 +4,7 @@ import { userEvent } from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
 import SignUpFormComponent from ".";
-import { renderComponent } from "#/tests/file-route-utils";
+import { renderComponent } from "#/tests/utils";
 
 describe("Sign up form", () => {
   let signUpForm: HTMLFormElement;

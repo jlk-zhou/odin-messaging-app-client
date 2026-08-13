@@ -3,7 +3,7 @@ import { screen, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
-import { renderTestRouter } from "#/tests/file-route-utils";
+import { renderTestRouter } from "#/tests/utils";
 
 describe("Email sign in form", () => {
   let emailSignInForm: HTMLFormElement;

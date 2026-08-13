@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 
 import { authClient } from "#/lib/auth-client";
 import { signUpFormSchema } from "./schema";
-import AuthInput from "../AuthInput";
+import AuthField from "../AuthField";
 
 interface SignUpFormProps {
   className?: string;
@@ -72,8 +72,8 @@ export default function SignUpForm({ className = "" }: SignUpFormProps) {
       onSubmit={form.handleSubmit(onSubmit)}
     >
       {error && <Alert severity="error">{error.message}</Alert>}
-      {entries.map((entry) => (
-        <AuthInput entry={entry} form={form} />
+      {entries.map((entry, index) => (
+        <AuthField key={index} entry={entry} form={form} />
       ))}
       <Button
         loading={form.formState.isSubmitting}
@@ -81,7 +81,7 @@ export default function SignUpForm({ className = "" }: SignUpFormProps) {
         variant="contained"
         className="w-30"
       >
-        Sign Up{" "}
+        Sign Up
       </Button>
     </form>
   );

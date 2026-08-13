@@ -11,7 +11,7 @@ interface AuthInputProps {
   required?: boolean;
 }
 
-export default function AuthInput({
+export default function AuthField({
   className = "",
   entry,
   form,
@@ -33,10 +33,10 @@ export default function AuthInput({
           ) : (
             <TextField
               {...field}
-              required={required}
-              type={entry === "name" || entry === "username" ? "text" : "email"}
-              label={_.capitalize(entry)}
               className={`w-full ${className}`}
+              type={entry === "name" || entry === "username" ? "text" : "email"}
+              required={required}
+              label={_.capitalize(entry)}
               data-invalid={fieldState.invalid}
               error={fieldState.invalid}
               helperText={fieldState.invalid && fieldState.error?.message}

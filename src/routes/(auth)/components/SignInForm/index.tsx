@@ -1,6 +1,6 @@
 import * as _ from "lodash-es";
 import Button from "@mui/material/Button";
-import AuthInput from "../AuthInput";
+import AuthField from "../AuthField";
 
 interface SignInFormProps {
   className?: string;
@@ -21,8 +21,8 @@ export default function SignInForm({
       className={`flex h-fit flex-col items-center gap-5 ${className}`}
       onSubmit={form.handleSubmit(onSubmit)}
     >
-      <AuthInput entry={mode} form={form} />
-      <AuthInput entry="password" form={form} />
+      <AuthField entry={mode} form={form} />
+      <AuthField entry="password" form={form} />
       <Button
         loading={form.formState.isSubmitting}
         type="submit"

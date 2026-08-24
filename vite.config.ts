@@ -18,7 +18,7 @@ const config = defineConfig({
       target: "react",
       quoteStyle: "double",
       autoCodeSplitting: true,
-      routeFileIgnorePattern: "tests?|components?|hooks?",
+      routeFileIgnorePattern: "tests?|components?|hooks?|utils?|helpers?",
     }),
     viteReact(),
   ],

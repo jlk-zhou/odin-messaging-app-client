@@ -18,7 +18,7 @@ function SignUp() {
       <SignUpForm className="w-full md:min-w-90" />
       <p className="mt-6 text-center">
         Already have an account?{' '}
-        <Link className="hover:underline" to={signInRoute.to}>
+        <Link className="text-sky-600 hover:underline" to={signInRoute.to}>
           Sign In
         </Link>
       </p>

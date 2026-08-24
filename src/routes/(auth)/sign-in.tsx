@@ -30,7 +30,7 @@ function SignIn() {
 
   // For tabs
   const [value, setValue] = useState(0);
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     emailForm.reset();
     usernameForm.reset();
     setFormError(false);
@@ -71,7 +71,7 @@ function SignIn() {
       </TabPanel>
       <p className="mt-12 text-center">
         Don't have an account?{" "}
-        <Link className="hover:underline" to={signUpRoute.to}>
+        <Link className="hover:underline text-sky-600" to={signUpRoute.to}>
           Sign Up
         </Link>
       </p>

@@ -37,7 +37,7 @@ export default function SignUpForm({ className = "" }: SignUpFormProps) {
       },
       {
         onSuccess: () => {
-          navigate({ to: "/" });
+          navigate({ to: "/app" });
         },
         onError: (ctx) => {
           switch (true) {

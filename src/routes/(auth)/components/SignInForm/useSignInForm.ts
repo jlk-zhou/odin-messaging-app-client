@@ -26,7 +26,7 @@ export default function useSignInForm() {
       },
       {
         onSuccess: () => {
-          navigate({ to: "/" });
+          navigate({ to: "/app" });
         },
         onError: (ctx) => {
           setFormError(ctx.error.message);
@@ -51,7 +51,7 @@ export default function useSignInForm() {
       },
       {
         onSuccess: () => {
-          navigate({ to: "/" });
+          navigate({ to: "/app" });
         },
         onError: (ctx) => {
           setFormError(ctx.error.message);

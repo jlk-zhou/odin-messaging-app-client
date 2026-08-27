@@ -9,11 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./routes/__root"
+import { Route as IndexRouteImport } from "./routes/index"
 import { Route as AppRouteRouteImport } from "./routes/app/route"
 import { Route as authSignInRouteImport } from "./routes/(auth)/sign-in"
 import { Route as authSignUpRouteImport } from "./routes/(auth)/sign-up"
+import { Route as AppIndexRouteImport } from "./routes/app/index"
 import { Route as AppUserIndexRouteImport } from "./routes/app/user/index"
 
+const IndexRoute = IndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppRouteRoute = AppRouteRouteImport.update({
   id: "/app",
   path: "/app",
@@ -29,6 +36,11 @@ const authSignUpRoute = authSignUpRouteImport.update({
   path: "/sign-up",
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppUserIndexRoute = AppUserIndexRouteImport.update({
   id: "/user/",
   path: "/user/",
@@ -36,33 +48,46 @@ const AppUserIndexRoute = AppUserIndexRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  "/": typeof IndexRoute
   "/app": typeof AppRouteRouteWithChildren
   "/sign-in": typeof authSignInRoute
   "/sign-up": typeof authSignUpRoute
+  "/app/": typeof AppIndexRoute
   "/app/user/": typeof AppUserIndexRoute
 }
 export interface FileRoutesByTo {
-  "/app": typeof AppRouteRouteWithChildren
+  "/": typeof IndexRoute
   "/sign-in": typeof authSignInRoute
   "/sign-up": typeof authSignUpRoute
+  "/app": typeof AppIndexRoute
   "/app/user": typeof AppUserIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  "/": typeof IndexRoute
   "/app": typeof AppRouteRouteWithChildren
   "/(auth)/sign-in": typeof authSignInRoute
   "/(auth)/sign-up": typeof authSignUpRoute
+  "/app/": typeof AppIndexRoute
   "/app/user/": typeof AppUserIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: "/app" | "/sign-in" | "/sign-up" | "/app/user/"
+  fullPaths: "/" | "/app" | "/sign-in" | "/sign-up" | "/app/" | "/app/user/"
   fileRoutesByTo: FileRoutesByTo
-  to: "/app" | "/sign-in" | "/sign-up" | "/app/user"
-  id: "__root__" | "/app" | "/(auth)/sign-in" | "/(auth)/sign-up" | "/app/user/"
+  to: "/" | "/sign-in" | "/sign-up" | "/app" | "/app/user"
+  id:
+    | "__root__"
+    | "/"
+    | "/app"
+    | "/(auth)/sign-in"
+    | "/(auth)/sign-up"
+    | "/app/"
+    | "/app/user/"
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AppRouteRoute: typeof AppRouteRouteWithChildren
   authSignInRoute: typeof authSignInRoute
   authSignUpRoute: typeof authSignUpRoute
@@ -70,6 +95,13 @@ export interface RootRouteChildren {
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/": {
+      id: "/"
+      path: "/"
+      fullPath: "/"
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/app": {
       id: "/app"
       path: "/app"
@@ -91,6 +123,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof authSignUpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    "/app/": {
+      id: "/app/"
+      path: "/"
+      fullPath: "/app/"
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     "/app/user/": {
       id: "/app/user/"
       path: "/user"
@@ -102,10 +141,12 @@ declare module "@tanstack/react-router" {
 }
 
 interface AppRouteRouteChildren {
+  AppIndexRoute: typeof AppIndexRoute
   AppUserIndexRoute: typeof AppUserIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppIndexRoute: AppIndexRoute,
   AppUserIndexRoute: AppUserIndexRoute,
 }
 
@@ -114,6 +155,7 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AppRouteRoute: AppRouteRouteWithChildren,
   authSignInRoute: authSignInRoute,
   authSignUpRoute: authSignUpRoute,

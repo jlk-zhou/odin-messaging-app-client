@@ -22,7 +22,7 @@ export default function UserDetails({ email, bio }: UserDetailsProps) {
         <h2 className="ml-2">Bio</h2>
         <EditInfoContainer info="bio">
           <p className="col-span-4 col-start-1 ml-2 self-center justify-self-start">
-            {bio}
+            {bio ? bio : "Write something..."}
           </p>
         </EditInfoContainer>
       </div>

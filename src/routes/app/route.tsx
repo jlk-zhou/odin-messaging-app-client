@@ -6,6 +6,10 @@ import {
   redirect,
 } from "@tanstack/react-router";
 
+/**
+ * Layout route for the entire app. Mainly to put the main app
+ * content behind an authentication wall.
+ */
 export const Route = createFileRoute("/app")({
   component: AppLayout,
   beforeLoad: async ({ location }) => {
@@ -34,13 +38,17 @@ export const Route = createFileRoute("/app")({
   },
 });
 
+/**
+ * The app's layout. In wide screen devices such as computers
+ * it will display a chat list on the left. The main app section
+ * where user sends messages, change personal information, etc,
+ * will be on the right. Will display the idle component when
+ * there's no chat to select.
+ * @returns A React component for the app's layout.
+ */
 function AppLayout() {
   return (
-    <div className="p-8">
-      <h1 className="text-4xl font-bold">Welcome to TanStack Start</h1>
-      <p className="mt-4 text-lg">
-        Edit <code>src/routes/index.tsx</code> to get started.
-      </p>
+    <div className="flex">
       <Outlet />
     </div>
   );

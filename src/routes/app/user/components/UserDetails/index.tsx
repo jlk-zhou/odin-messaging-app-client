@@ -1,15 +1,19 @@
 import EditInfoContainer from "../EditInfoContainer";
 
-export default function UserDetails() {
+interface UserDetailsProps {
+  email: string;
+  bio?: string | null | undefined;
+}
+
+export default function UserDetails({ email, bio }: UserDetailsProps) {
   return (
     <>
-      {" "}
       {/* Email */}
       <div>
         <h2 className="ml-2">Email</h2>
         <EditInfoContainer info="email">
           <p className="col-span-4 col-start-1 ml-2 self-center justify-self-start">
-            zachjoe@example.com
+            {email}
           </p>
         </EditInfoContainer>
       </div>
@@ -18,7 +22,7 @@ export default function UserDetails() {
         <h2 className="ml-2">Bio</h2>
         <EditInfoContainer info="bio">
           <p className="col-span-4 col-start-1 ml-2 self-center justify-self-start">
-            Not your average gay
+            {bio}
           </p>
         </EditInfoContainer>
       </div>

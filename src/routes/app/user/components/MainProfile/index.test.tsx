@@ -7,11 +7,17 @@ import MainProfile from ".";
 
 describe("Self user info page", () => {
   beforeEach(() => {
-    renderComponent(<MainProfile />);
+    renderComponent(
+      <MainProfile
+        image="example.png"
+        fullName="Zach Joe"
+        username="zachjoe2456"
+      />,
+    );
   });
 
   it("renders user's avatar image", async () => {
-    const avatar = await screen.findByRole("img", { name: /avatar/i });
+    const avatar = await screen.findByAltText(/user avatar/i);
     expect(avatar).toBeInTheDocument();
   });
 

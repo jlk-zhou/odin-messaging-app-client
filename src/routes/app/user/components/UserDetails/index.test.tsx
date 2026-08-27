@@ -7,7 +7,9 @@ import UserDetails from ".";
 
 describe("User Details like email and bio", () => {
   beforeEach(() => {
-    renderComponent(<UserDetails />);
+    renderComponent(
+      <UserDetails email="zachjoe@example.com" bio="Not your average gay" />,
+    );
   });
 
   it("renders the email section title", async () => {

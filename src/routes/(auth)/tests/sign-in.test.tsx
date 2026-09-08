@@ -6,7 +6,7 @@ import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 
 beforeEach(() => {
-  renderTestRouter("/sign-in");
+  renderTestRouter({ initialLocation: "/sign-in" });
 });
 
 describe("Sign in page", () => {

@@ -1,15 +1,25 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import { renderTestRouter } from "#/tests/utils";
+import { beforeEach, describe, expect, it } from "vitest";
 import { screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { renderComponent } from "#/tests/utils";
+import MyInfoPage from ".";
 
-vi.mock(import("../helpers/protectRoute"), () => ({
-  default: vi.fn(),
-}));
+const user = {
+  id: "1",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  email: "zachjoe@example.com",
+  emailVerified: false,
+  name: "Zach Joe",
+  image: "example.png",
+  username: "zachjoe2456",
+  displayUsername: "zachjoe2456",
+  bio: "Not your average gay",
+};
 
-describe("User Details like email and bio", () => {
+describe("User Detailed Info Page", () => {
   beforeEach(() => {
-    renderTestRouter("/app/user");
+    renderComponent(<MyInfoPage user={user} />);
   });
 
   it("renders all information for a user", async () => {

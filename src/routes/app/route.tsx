@@ -6,36 +6,37 @@ import {
   redirect,
 } from "@tanstack/react-router";
 
+export async function protectRoute({ location }: any) {
+  try {
+    const { data: session, error } = await authClient.getSession();
+    if (error) {
+      throw error;
+    }
+    if (!session) {
+      throw redirect({
+        to: "/sign-in",
+        search: {
+          redirect: location.href,
+        },
+      });
+    }
+    return { session };
+  } catch (error) {
+    if (isRedirect(error)) throw error;
+    throw redirect({
+      to: "/sign-in",
+      search: { redirect: location.href },
+    });
+  }
+}
+
 /**
  * Layout route for the entire app. Mainly to put the main app
  * content behind an authentication wall.
  */
 export const Route = createFileRoute("/app")({
   component: AppLayout,
-  beforeLoad: async ({ location }) => {
-    try {
-      const { data: session, error } = await authClient.getSession();
-      if (error) {
-        throw error;
-      }
-      if (!session) {
-        throw redirect({
-          to: "/sign-in",
-          search: {
-            redirect: location.href,
-          },
-        });
-      }
-      return { session };
-    } catch (error) {
-      if (isRedirect(error)) throw error;
-
-      throw redirect({
-        to: "/sign-in",
-        search: { redirect: location.href },
-      });
-    }
-  },
+  beforeLoad: protectRoute,
 });
 
 /**

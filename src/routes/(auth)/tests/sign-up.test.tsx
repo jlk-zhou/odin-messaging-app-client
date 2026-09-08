@@ -7,7 +7,7 @@ import "@testing-library/jest-dom";
 
 describe("Sign up page", () => {
   beforeEach(() => {
-    renderTestRouter("/sign-up");
+    renderTestRouter({ initialLocation: "/sign-up" });
   });
 
   it("has a heading", async () => {

@@ -1,21 +1,81 @@
-import { render } from "@testing-library/react";
+import { render, type RenderOptions } from "@testing-library/react";
 import {
   createRouter,
   createMemoryHistory,
   RouterProvider,
   createRootRoute,
+  Outlet,
+  createRoute,
 } from "@tanstack/react-router";
 import { routeTree } from "#/routeTree.gen";
 import type React from "react";
 
-export function renderTestRouter(initialLocation = "/") {
+interface RenderRouteOptions {
+  initialLocation?: string;
+  routerContext?: any;
+}
+
+export async function renderTestRouter({
+  initialLocation = "/",
+  routerContext = {},
+  ...renderOptions
+}: RenderRouteOptions = {}) {
   const router = createRouter({
     routeTree,
     history: createMemoryHistory({
       initialEntries: [initialLocation],
     }),
+    context: routerContext,
   });
-  return { ...render(<RouterProvider router={router} />) };
+  return {
+    ...render(<RouterProvider router={router} />, {
+      ...renderOptions,
+    }),
+    router,
+  };
+}
+
+interface RenderWithFileRoutesOptions extends Omit<RenderOptions, "wrapper"> {
+  routePath?: string;
+  initialLocation?: string;
+  routerContext?: any;
+}
+
+export function renderWithFileRoutes(
+  ui: React.ReactElement,
+  {
+    routePath = "/",
+    initialLocation = "/",
+    routerContext = {},
+    ...renderOptions
+  }: RenderWithFileRoutesOptions = {},
+) {
+  const rootRoute = createRootRoute({
+    component: () => <Outlet />,
+  });
+
+  const testRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: routePath,
+    component: () => ui,
+  });
+
+  const routeTree = rootRoute.addChildren([testRoute]);
+
+  const router = createRouter({
+    routeTree,
+    history: createMemoryHistory({
+      initialEntries: [initialLocation],
+    }),
+    context: routerContext,
+  });
+
+  return {
+    ...render(<RouterProvider router={router} />, {
+      ...renderOptions,
+    }),
+    router,
+  };
 }
 
 /**

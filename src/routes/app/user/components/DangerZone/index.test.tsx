@@ -79,4 +79,11 @@ describe("Delete warning dialog", () => {
     const confirmButton = await screen.findByRole("button", { name: /yes/i });
     expect(confirmButton).toBeInTheDocument();
   });
+
+  it("has a form for user to input their password for deleting account", async () => {
+    const passwordInput = await screen.findByLabelText(/password/i, {
+      selector: "input",
+    });
+    expect(passwordInput).toBeInTheDocument();
+  });
 });

@@ -39,7 +39,7 @@ describe("Danger zone in user info page", () => {
     expect(DeleteDialogHeading).toBeInTheDocument();
   });
 
-  it("allows the dialog to be closed", async () => {
+  it("allows the dialog to be closed by button", async () => {
     const user = userEvent.setup();
     const deleteAccountButton = await screen.findByRole("button", {
       name: /delete account/i,
@@ -71,7 +71,12 @@ describe("Delete warning dialog", () => {
   });
 
   it("has a close button", async () => {
-    const deleteButton = await screen.findByRole("button", { name: /no/i });
-    expect(deleteButton).toBeInTheDocument();
+    const cancelButton = await screen.findByRole("button", { name: /no/i });
+    expect(cancelButton).toBeInTheDocument();
+  });
+
+  it("has a confirm button", async () => {
+    const confirmButton = await screen.findByRole("button", { name: /yes/i });
+    expect(confirmButton).toBeInTheDocument();
   });
 });

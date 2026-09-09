@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { renderComponent } from "#/tests/utils";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import DangerZone from ".";
@@ -38,12 +38,40 @@ describe("Danger zone in user info page", () => {
     });
     expect(DeleteDialogHeading).toBeInTheDocument();
   });
+
+  it("allows the dialog to be closed", async () => {
+    const user = userEvent.setup();
+    const deleteAccountButton = await screen.findByRole("button", {
+      name: /delete account/i,
+    });
+    await user.click(deleteAccountButton);
+    const closeDialogButton = await screen.findByRole("button", {
+      name: /no/i,
+    });
+    await user.click(closeDialogButton);
+    const DeleteDialogHeading = screen.queryByRole("heading", {
+      name: /delete/i,
+    });
+    await waitFor(() => {
+      expect(DeleteDialogHeading).not.toBeInTheDocument();
+    });
+  });
 });
 
 describe("Delete warning dialog", () => {
   beforeEach(() => {
-    renderComponent(<DeleteWarning open={true} username={"zachjoe"} />);
+    let isOpen = true;
+    renderComponent(
+      <DeleteWarning
+        open={isOpen}
+        username={"zachjoe"}
+        handleClose={() => (isOpen = false)}
+      />,
+    );
   });
 
-  it("has a close button", async () => {});
+  it("has a close button", async () => {
+    const deleteButton = await screen.findByRole("button", { name: /no/i });
+    expect(deleteButton).toBeInTheDocument();
+  });
 });

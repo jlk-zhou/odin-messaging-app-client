@@ -8,8 +8,11 @@ interface DangerZoneProps {
 
 export default function DangerZone({ username }: DangerZoneProps) {
   const [deleteWarningOpen, setDeleteWarningOpen] = useState(false);
-  function handleClickDelete() {
+  function handleClickOpen() {
     setDeleteWarningOpen(true);
+  }
+  function handleClickClose() {
+    setDeleteWarningOpen(false);
   }
 
   return (
@@ -21,11 +24,15 @@ export default function DangerZone({ username }: DangerZoneProps) {
           variant="contained"
           color="warning"
           className="w-45"
-          onClick={handleClickDelete}
+          onClick={handleClickOpen}
         >
           Delete Account
         </Button>
-        <DeleteWarning open={deleteWarningOpen} username={username} />
+        <DeleteWarning
+          open={deleteWarningOpen}
+          username={username}
+          handleClose={handleClickClose}
+        />
       </div>
     </div>
   );

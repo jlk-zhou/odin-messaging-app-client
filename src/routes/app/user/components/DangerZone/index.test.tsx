@@ -4,10 +4,13 @@ import { screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import DangerZone from ".";
+import DeleteWarning from "./DeleteWarning";
 
-describe("User Details like email and bio", () => {
+import userEvent from "@testing-library/user-event";
+
+describe("Danger zone in user info page", () => {
   beforeEach(() => {
-    renderComponent(<DangerZone />);
+    renderComponent(<DangerZone username={"zachjoe"} />);
   });
 
   it("renders the danger zone heading", async () => {
@@ -23,4 +26,24 @@ describe("User Details like email and bio", () => {
     });
     expect(deleteAccountButton).toBeInTheDocument();
   });
+
+  it("pops up a dialog after user clicks delete button", async () => {
+    const user = userEvent.setup();
+    const deleteAccountButton = await screen.findByRole("button", {
+      name: /delete account/i,
+    });
+    await user.click(deleteAccountButton);
+    const DeleteDialogHeading = await screen.findByRole("heading", {
+      name: /delete/i,
+    });
+    expect(DeleteDialogHeading).toBeInTheDocument();
+  });
+});
+
+describe("Delete warning dialog", () => {
+  beforeEach(() => {
+    renderComponent(<DeleteWarning open={true} username={"zachjoe"} />);
+  });
+
+  it("has a close button", async () => {});
 });

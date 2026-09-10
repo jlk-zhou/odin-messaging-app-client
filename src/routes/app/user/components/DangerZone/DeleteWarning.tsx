@@ -6,7 +6,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import PasswordField from "#/routes/components/PasswordField";
-import { Controller, useForm, type SubmitHandler } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 import { passwordFormSchema } from "./passwordFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";

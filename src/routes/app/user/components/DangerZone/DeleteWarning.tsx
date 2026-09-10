@@ -11,6 +11,7 @@ import * as z from "zod";
 import { passwordFormSchema } from "./passwordFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "#/lib/auth-client";
+import { useNavigate } from "@tanstack/react-router";
 
 interface DeleteWarningProps {
   open: boolean;
@@ -36,9 +37,13 @@ export default function DeleteWarning({
     setDialogState(false);
   }
 
+  const navigate = useNavigate({ from: "/app/user/" });
   async function onSubmit(data: z.infer<typeof passwordFormSchema>) {
     const response = await authClient.deleteUser({
       password: data.password,
+      fetchOptions: {
+        onSuccess: () => navigate({ to: "/sign-in" }),
+      },
     });
     if (response.error?.code === "INVALID_PASSWORD") {
       form.setError("password", { message: "Your password is incorrect." });

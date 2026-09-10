@@ -11,9 +11,6 @@ export default function DangerZone({ username }: DangerZoneProps) {
   function handleClickOpen() {
     setDeleteWarningOpen(true);
   }
-  function handleClickClose() {
-    setDeleteWarningOpen(false);
-  }
 
   return (
     <div className="w-full">
@@ -31,7 +28,7 @@ export default function DangerZone({ username }: DangerZoneProps) {
         <DeleteWarning
           open={deleteWarningOpen}
           username={username}
-          handleClose={handleClickClose}
+          setDialogState={setDeleteWarningOpen}
         />
       </div>
     </div>

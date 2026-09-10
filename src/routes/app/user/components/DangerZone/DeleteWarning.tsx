@@ -7,27 +7,37 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import PasswordField from "#/routes/components/PasswordField";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
+import * as z from "zod";
+import { passwordFormSchema } from "./passwordFormSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface DeleteWarningProps {
   open: boolean;
   username: string;
-  handleClose: () => void;
-}
-
-interface PasswordFormInput {
-  password: string;
+  setDialogState: (value: React.SetStateAction<boolean>) => void;
 }
 
 export default function DeleteWarning({
   open,
   username,
-  handleClose,
+  setDialogState,
 }: DeleteWarningProps) {
-  const { control, handleSubmit } = useForm<PasswordFormInput>({});
+  const form = useForm<z.infer<typeof passwordFormSchema>>({
+    resolver: zodResolver(passwordFormSchema),
+    mode: "onTouched",
+    defaultValues: {
+      password: "",
+    },
+  });
 
-  const onSubmit: SubmitHandler<PasswordFormInput> = (data) => {
+  function handleClose() {
+    form.reset();
+    setDialogState(false);
+  }
+
+  function onSubmit(data: z.infer<typeof passwordFormSchema>) {
     console.log(data);
-  };
+  }
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -44,14 +54,18 @@ export default function DeleteWarning({
         </DialogContentText>
         <form
           method="post"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmit)}
           id="confirm-by-password"
         >
           <Controller
             name="password"
-            control={control}
-            render={({ field }) => (
-              <PasswordField {...field} className="mt-3 w-full" />
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <PasswordField
+                {...field}
+                className="mt-3 w-full"
+                fieldState={fieldState}
+              />
             )}
           />
         </form>

@@ -1,46 +1,46 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-import FormControl from '@mui/material/FormControl'
-import FormHelperText from '@mui/material/FormHelperText'
-import IconButton from '@mui/material/IconButton'
-import InputAdornment from '@mui/material/InputAdornment'
-import InputLabel from '@mui/material/InputLabel'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import type { OutlinedInputProps } from '@mui/material'
-import type { ControllerFieldState } from 'react-hook-form'
+import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import type { OutlinedInputProps } from "@mui/material";
+import type { ControllerFieldState } from "react-hook-form";
 
 interface PasswordFieldProps extends OutlinedInputProps {
-  className?: string
-  confirming?: boolean
-  fieldState?: ControllerFieldState | undefined
+  className?: string;
+  confirming?: boolean;
+  fieldState?: ControllerFieldState | undefined;
 }
 
 export default function PasswordField({
-  className = '',
+  className = "",
   confirming = false,
   fieldState = undefined,
   ...props
 }: PasswordFieldProps) {
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show)
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
   const handleMouseUpPassword = (
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
 
-  const label = confirming ? 'Confirm Password' : 'Password'
-  const id = confirming ? 'confirm-password' : 'password'
-  const helperTextId = `${id}-error`
-  const name = confirming ? 'confirmPassword' : 'password'
+  const label = confirming ? "Confirm Password" : "Password";
+  const id = confirming ? "confirm-password" : "password";
+  const helperTextId = `${id}-error`;
+  const name = confirming ? "confirmPassword" : "password";
 
   return (
     <FormControl
@@ -58,19 +58,19 @@ export default function PasswordField({
         slotProps={{
           input: {
             minLength: 8,
-            maxLength: 50,
-            'aria-describedby': helperTextId,
+            maxLength: 32,
+            "aria-describedby": helperTextId,
           },
         }}
         required
         id={id}
         name={name}
-        type={showPassword ? 'text' : 'password'}
+        type={showPassword ? "text" : "password"}
         label={`${label}`}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
-              aria-label={showPassword ? 'hide password' : 'show password'}
+              aria-label={showPassword ? "hide password" : "show password"}
               onClick={handleClickShowPassword}
               onMouseDown={handleMouseDownPassword}
               onMouseUp={handleMouseUpPassword}
@@ -87,5 +87,5 @@ export default function PasswordField({
         </FormHelperText>
       )}
     </FormControl>
-  )
+  );
 }

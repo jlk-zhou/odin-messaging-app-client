@@ -10,6 +10,7 @@ import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 import { passwordFormSchema } from "./passwordFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { authClient } from "#/lib/auth-client";
 
 interface DeleteWarningProps {
   open: boolean;
@@ -35,8 +36,13 @@ export default function DeleteWarning({
     setDialogState(false);
   }
 
-  function onSubmit(data: z.infer<typeof passwordFormSchema>) {
-    console.log(data);
+  async function onSubmit(data: z.infer<typeof passwordFormSchema>) {
+    const response = await authClient.deleteUser({
+      password: data.password,
+    });
+    if (response.error?.code === "INVALID_PASSWORD") {
+      form.setError("password", { message: "Your password is incorrect." });
+    }
   }
 
   return (
@@ -71,8 +77,14 @@ export default function DeleteWarning({
         </form>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>No</Button>
-        <Button type="submit" form="confirm-by-password">
+        <Button onClick={handleClose} variant="contained">
+          No
+        </Button>
+        <Button
+          loading={form.formState.isSubmitting}
+          type="submit"
+          form="confirm-by-password"
+        >
           Yes, I understand and wish to proceed
         </Button>
       </DialogActions>

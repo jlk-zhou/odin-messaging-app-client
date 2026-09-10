@@ -113,6 +113,4 @@ describe("Delete warning dialog", () => {
     // And shows an error message
     expect(passwordInput).toHaveAccessibleDescription(/password/i);
   });
-
-  // it("clears the form on close", async () => {});
 });

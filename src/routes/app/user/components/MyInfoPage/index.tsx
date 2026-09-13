@@ -38,7 +38,7 @@ export default function MyInfoPage({ user }: MyInfoPageProps) {
         username={user.username}
       />
       <UserDetails email={user.email} bio={user.bio} />
-      <Options />
+      <Options username={user.username as string} />
       <DangerZone username={user.username as string} />
     </div>
   );

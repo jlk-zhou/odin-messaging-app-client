@@ -1,22 +1,18 @@
-import { authClient } from "#/lib/auth-client";
 import Button from "@mui/material/Button";
-import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import ConfirmLogOut from "./ConfirmLogOut";
 
-export default function Options() {
-  const navigate = useNavigate({ from: "/app/user/" });
-  const [isSigningOut, setIsSigningOut] = useState(false);
-  async function handleClick() {
-    await authClient.signOut({
-      fetchOptions: {
-        onLoading: () => {
-          setIsSigningOut(true);
-        },
-        onSuccess: () => {
-          navigate({ to: "/sign-in" });
-        },
-      },
-    });
+interface OptionsProps {
+  username: string;
+}
+
+export default function Options({ username }: OptionsProps) {
+  const [open, setOpen] = useState(false);
+  function handleClick() {
+    setOpen(true);
+  }
+  function handleClose() {
+    setOpen(false);
   }
 
   return (
@@ -24,9 +20,14 @@ export default function Options() {
       <Button variant="contained" className="w-45">
         Change Password
       </Button>
-      <Button variant="contained" loading={isSigningOut} onClick={handleClick}>
+      <Button variant="contained" onClick={handleClick}>
         Log Out
       </Button>
+      <ConfirmLogOut
+        open={open}
+        handleClose={handleClose}
+        username={username}
+      />
     </div>
   );
 }

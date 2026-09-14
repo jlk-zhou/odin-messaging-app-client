@@ -15,12 +15,14 @@ interface PasswordFieldProps extends OutlinedInputProps {
   className?: string;
   confirming?: boolean;
   fieldState?: ControllerFieldState | undefined;
+  label?: string;
 }
 
 export default function PasswordField({
   className = "",
   confirming = false,
   fieldState = undefined,
+  label,
   ...props
 }: PasswordFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
@@ -37,7 +39,13 @@ export default function PasswordField({
     event.preventDefault();
   };
 
-  const label = confirming ? "Confirm Password" : "Password";
+  let inputLabel;
+  if (label) {
+    inputLabel = label;
+  } else {
+    inputLabel = confirming ? "Confirm Password" : "Password";
+  }
+
   const id = confirming ? "confirm-password" : "password";
   const helperTextId = `${id}-error`;
   const name = confirming ? "confirmPassword" : "password";
@@ -50,7 +58,7 @@ export default function PasswordField({
       data-invalid={fieldState?.invalid}
     >
       <InputLabel htmlFor={id} required>
-        {label}
+        {inputLabel}
       </InputLabel>
       <OutlinedInput
         {...props}
@@ -66,7 +74,7 @@ export default function PasswordField({
         id={id}
         name={name}
         type={showPassword ? "text" : "password"}
-        label={`${label}`}
+        label={`${inputLabel}`}
         endAdornment={
           <InputAdornment position="end">
             <IconButton

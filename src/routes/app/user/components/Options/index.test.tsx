@@ -18,7 +18,7 @@ describe("Change password option", () => {
 
   it("pops up a dialog after user clicks change password button", async () => {
     const changePasswordHeading = await screen.findByRole("heading", {
-      name: /change password/i,
+      name: /changing password/i,
     });
     expect(changePasswordHeading).toBeInTheDocument();
   });
@@ -62,7 +62,7 @@ describe("Change password option", () => {
     });
     await user.click(closeButton);
     const changePasswordHeading = await screen.queryByRole("heading", {
-      name: /change password/i,
+      name: /changing password/i,
     });
     await waitFor(() => {
       expect(changePasswordHeading).not.toBeInTheDocument();

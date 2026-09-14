@@ -4,6 +4,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 import PasswordField from "#/routes/components/PasswordField";
 import { Controller, useForm } from "react-hook-form";
@@ -52,7 +54,19 @@ export default function DeleteWarning({
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Delete Account @{username}?</DialogTitle>
+      <DialogTitle sx={{ m: 0, p: 2 }}>Delete Account @{username}?</DialogTitle>
+      <IconButton
+        aria-label="close"
+        onClick={handleClose}
+        sx={(theme) => ({
+          position: "absolute",
+          right: 8,
+          top: 8,
+          color: theme.palette.grey[500],
+        })}
+      >
+        <CloseIcon />
+      </IconButton>
       <DialogContent>
         <DialogContentText>
           Your account information and all of your messages will be deleted.

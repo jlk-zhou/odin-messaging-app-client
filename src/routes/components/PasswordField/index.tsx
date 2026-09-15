@@ -13,16 +13,16 @@ import type { ControllerFieldState } from "react-hook-form";
 
 interface PasswordFieldProps extends OutlinedInputProps {
   className?: string;
+  isNew?: boolean;
   confirming?: boolean;
   fieldState?: ControllerFieldState | undefined;
-  label?: string;
 }
 
 export default function PasswordField({
   className = "",
+  isNew = false,
   confirming = false,
   fieldState = undefined,
-  label,
   ...props
 }: PasswordFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
@@ -39,16 +39,22 @@ export default function PasswordField({
     event.preventDefault();
   };
 
-  let inputLabel;
-  if (label) {
-    inputLabel = label;
-  } else {
-    inputLabel = confirming ? "Confirm Password" : "Password";
-  }
-
-  const id = confirming ? "confirm-password" : "password";
+  const label = isNew
+    ? "New Password"
+    : confirming
+      ? "Confirm Password"
+      : "Password";
+  const id = isNew
+    ? "new-password"
+    : confirming
+      ? "confirm-password"
+      : "password";
   const helperTextId = `${id}-error`;
-  const name = confirming ? "confirmPassword" : "password";
+  const name = isNew
+    ? "newPassword"
+    : confirming
+      ? "confirmPassword"
+      : "password";
 
   return (
     <FormControl
@@ -58,7 +64,7 @@ export default function PasswordField({
       data-invalid={fieldState?.invalid}
     >
       <InputLabel htmlFor={id} required>
-        {inputLabel}
+        {label}
       </InputLabel>
       <OutlinedInput
         {...props}
@@ -74,7 +80,7 @@ export default function PasswordField({
         id={id}
         name={name}
         type={showPassword ? "text" : "password"}
-        label={`${inputLabel}`}
+        label={`${label}`}
         endAdornment={
           <InputAdornment position="end">
             <IconButton

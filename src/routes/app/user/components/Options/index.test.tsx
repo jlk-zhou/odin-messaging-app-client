@@ -31,12 +31,9 @@ describe("Change password option", () => {
   });
 
   it("has an input field for entering old password", async () => {
-    const currentPasswordInput = await screen.findByLabelText(
-      /current password/i,
-      {
-        selector: "input",
-      },
-    );
+    const currentPasswordInput = await screen.findByLabelText(/^password/i, {
+      selector: "input",
+    });
     expect(currentPasswordInput).toBeInTheDocument();
   });
 

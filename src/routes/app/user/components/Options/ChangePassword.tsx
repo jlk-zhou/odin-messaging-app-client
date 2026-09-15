@@ -62,7 +62,6 @@ export default function ChangePassword({
                 {...field}
                 className="w-full"
                 fieldState={fieldState}
-                label="Current Password"
               />
             )}
           />
@@ -75,7 +74,7 @@ export default function ChangePassword({
                 {...field}
                 className="w-full"
                 fieldState={fieldState}
-                label="New Password"
+                isNew={true}
               />
             )}
           />

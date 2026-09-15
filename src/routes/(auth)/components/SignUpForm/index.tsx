@@ -15,7 +15,7 @@ interface SignUpFormProps {
   className?: string;
 }
 
-type Entry = "name" | "email" | "username" | "password" | "confirmPassword";
+type Entry = "name" | "email" | "username" | "newPassword" | "confirmPassword";
 
 export default function SignUpForm({ className = "" }: SignUpFormProps) {
   const navigate = useNavigate({ from: "/sign-up" });
@@ -26,7 +26,7 @@ export default function SignUpForm({ className = "" }: SignUpFormProps) {
       name: "",
       email: "",
       username: "",
-      password: "",
+      newPassword: "",
       confirmPassword: "",
     },
   });
@@ -34,6 +34,7 @@ export default function SignUpForm({ className = "" }: SignUpFormProps) {
     await authClient.signUp.email(
       {
         ...reqBody,
+        password: reqBody.newPassword,
       },
       {
         onSuccess: () => {
@@ -61,7 +62,7 @@ export default function SignUpForm({ className = "" }: SignUpFormProps) {
     "name",
     "email",
     "username",
-    "password",
+    "newPassword",
     "confirmPassword",
   ];
 

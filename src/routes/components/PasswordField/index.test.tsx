@@ -4,19 +4,12 @@ import PasswordFieldComponent from "./index";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { renderComponent } from "#/tests/utils";
-
-describe("Custom Password Field Component", () => {
-  beforeEach(() => {
-    renderComponent(<PasswordFieldComponent label="Current Password" />);
-  });
-
-  it("allows customizing labels and render labels correctly", async () => {
-    const passwordField = await screen.findByLabelText(/current password/i, {
-      selector: "input",
-    });
-    expect(passwordField).toBeInTheDocument();
-  });
-});
+import * as z from "zod";
+import {
+  confirmPasswordSchema,
+  existingPasswordSchema,
+  newPasswordSchema,
+} from "#/routes/util/userFieldSchemas";
 
 describe("Password Field Component", () => {
   let passwordField: HTMLInputElement;
@@ -80,4 +73,22 @@ describe("Confirm Password Field Component", () => {
       confirmPasswordRegex,
     );
   });
+});
+
+describe("Password Field Input Validation UI", () => {
+  const formSchema = z
+    .object({
+      password: existingPasswordSchema,
+      newPassword: newPasswordSchema,
+      confirmPassword: confirmPasswordSchema,
+    })
+    .refine(
+      (data) => {
+        return data.newPassword === data.confirmPassword;
+      },
+      {
+        path: ["confirmPassword"],
+        message: "Passwords must match.",
+      },
+    );
 });

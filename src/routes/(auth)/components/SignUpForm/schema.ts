@@ -13,12 +13,12 @@ export const signUpFormSchema = z
     name: nameSchema,
     email: emailSchema,
     username: usernameSchema,
-    password: newPasswordSchema,
+    newPassword: newPasswordSchema,
     confirmPassword: confirmPasswordSchema,
   })
   .refine(
     (data) => {
-      return data.password === data.confirmPassword;
+      return data.newPassword === data.confirmPassword;
     },
     {
       path: ["confirmPassword"],

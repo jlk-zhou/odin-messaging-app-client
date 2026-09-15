@@ -6,7 +6,13 @@ import PasswordField from "#/routes/components/PasswordField";
 
 interface AuthInputProps {
   className?: string;
-  entry: "name" | "email" | "username" | "password" | "confirmPassword";
+  entry:
+    | "name"
+    | "email"
+    | "username"
+    | "newPassword"
+    | "password"
+    | "confirmPassword";
   form: any;
   required?: boolean;
 }
@@ -23,11 +29,14 @@ export default function AuthField({
       control={form.control}
       render={({ field, fieldState }) => (
         <>
-          {entry === "password" || entry === "confirmPassword" ? (
+          {entry === "newPassword" ||
+          entry === "password" ||
+          entry === "confirmPassword" ? (
             <PasswordField
               {...field}
               fieldState={fieldState}
               className={`w-full ${className}`}
+              isNew={entry === "newPassword" ? true : false}
               confirming={entry === "confirmPassword" ? true : false}
             />
           ) : (

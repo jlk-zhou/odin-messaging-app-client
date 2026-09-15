@@ -22,7 +22,7 @@ describe("Sign up form", () => {
     nameInput = within(signUpForm).getByLabelText(/^name/i);
     emailInput = within(signUpForm).getByLabelText(/^email/i);
     usernameInput = within(signUpForm).getByLabelText(/^username/i);
-    passwordInput = within(signUpForm).getByLabelText(/^password/i);
+    passwordInput = within(signUpForm).getByLabelText(/new password/i);
     confirmPasswordInput =
       within(signUpForm).getByLabelText(/^confirm password/i);
   });
@@ -44,7 +44,7 @@ describe("Sign up form", () => {
       name: "Jane",
       email: "jane@example.com",
       username: "jane123",
-      password: "SuperStrongPw123!",
+      newPassword: "SuperStrongPw123!",
       confirmPassword: "SuperStrongPw123!",
     });
   });

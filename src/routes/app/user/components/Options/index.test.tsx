@@ -65,6 +65,38 @@ describe("Change password option", () => {
       expect(changePasswordHeading).not.toBeInTheDocument();
     });
   });
+
+  it("clears the change password form once the dialog is closed", async () => {
+    const user = await userEvent.setup();
+    const currentPasswordInput = await screen.findByLabelText(/^password/i, {
+      selector: "input",
+    });
+    const newPasswordInput = await screen.findByLabelText(/new password/i, {
+      selector: "input",
+    });
+    const confirmNewPasswordInput = await screen.findByLabelText(
+      /confirm password/i,
+      { selector: "input" },
+    );
+
+    await user.type(currentPasswordInput, "Qwe123456");
+    await user.type(newPasswordInput, "654321ewQ");
+    await user.type(confirmNewPasswordInput, "654321ewQ");
+
+    const closeButton = await screen.findByRole("button", {
+      name: /cancel/i,
+    });
+    await user.click(closeButton);
+
+    const changePasswordButton = await screen.findByRole("button", {
+      name: /change password/i,
+    });
+    await user.click(changePasswordButton);
+
+    expect(currentPasswordInput).toHaveValue("");
+    expect(newPasswordInput).toHaveValue("");
+    expect(confirmNewPasswordInput).toHaveValue("");
+  });
 });
 
 describe("Log out option", () => {

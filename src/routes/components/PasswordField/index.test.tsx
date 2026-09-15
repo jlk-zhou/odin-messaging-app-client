@@ -80,7 +80,6 @@ describe("Password Field Input Validation UI", () => {
       name: /password form/i,
     });
     expect(heading).toBeInTheDocument();
-    screen.debug();
   });
 
   it("has a current password field that becomes invalid for invalid input", async () => {

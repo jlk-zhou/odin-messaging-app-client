@@ -15,23 +15,30 @@ import PasswordField from "#/routes/components/PasswordField";
 
 interface ChangePasswordProps {
   open: boolean;
-  handleClose: () => void;
+  setDialogState: (value: React.SetStateAction<boolean>) => void;
 }
 
 export default function ChangePassword({
   open,
-  handleClose,
+  setDialogState,
 }: ChangePasswordProps) {
   const form = useForm<z.infer<typeof changePasswordSchema>>({
     resolver: zodResolver(changePasswordSchema),
     mode: "onTouched",
     defaultValues: {
       currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
     },
   });
 
   function onSubmit(data: z.infer<typeof changePasswordSchema>) {
     console.log(data);
+  }
+
+  function handleClose() {
+    form.reset();
+    setDialogState(false);
   }
 
   return (

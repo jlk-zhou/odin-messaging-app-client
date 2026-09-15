@@ -12,9 +12,6 @@ export default function Options({ username }: OptionsProps) {
   function handleChangePasswordClick() {
     setChangePasswordOpen(true);
   }
-  function handleChangePasswordClose() {
-    setChangePasswordOpen(false);
-  }
 
   const [logOutOpen, setLogOutOpen] = useState(false);
   function handleLogOutClick() {
@@ -35,7 +32,7 @@ export default function Options({ username }: OptionsProps) {
       </Button>
       <ChangePassword
         open={changePasswordOpen}
-        handleClose={handleChangePasswordClose}
+        setDialogState={setChangePasswordOpen}
       />
       <Button variant="contained" onClick={handleLogOutClick}>
         Log Out

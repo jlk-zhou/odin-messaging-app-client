@@ -56,6 +56,27 @@ describe("Danger zone in user info page", () => {
       expect(DeleteDialogHeading).not.toBeInTheDocument();
     });
   });
+
+  it("clears the form within the dialog once closed", async () => {
+    const user = await userEvent.setup();
+    const deleteAccountButton = await screen.findByRole("button", {
+      name: /delete account/i,
+    });
+    await user.click(deleteAccountButton);
+
+    const passwordInput = await screen.findByLabelText(/^password/i, {
+      selector: "input",
+    });
+    await user.type(passwordInput, "Qwe123456");
+
+    const closeButton = await screen.findByRole("button", {
+      name: /no/i,
+    });
+    await user.click(closeButton);
+    await user.click(deleteAccountButton);
+
+    expect(passwordInput).toHaveValue("");
+  });
 });
 
 describe("Delete warning dialog", () => {

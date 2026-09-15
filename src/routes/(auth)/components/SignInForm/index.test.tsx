@@ -11,7 +11,7 @@ describe("Email sign in form", () => {
   let passwordInput: HTMLInputElement;
 
   beforeEach(async () => {
-    renderTestRouter("/sign-in");
+    renderTestRouter({ initialLocation: "/sign-in" });
     emailSignInForm = await screen.findByRole("form", {
       name: /email sign(?:\s|-)in form/i,
     });
@@ -89,23 +89,6 @@ describe("Email sign in form", () => {
     it("exists", () => {
       expect(passwordInput).toBeInTheDocument();
     });
-
-    it("becomes invalid for invalid passwords", async () => {
-      const user = await userEvent.setup();
-
-      await user.click(passwordInput);
-      expect(passwordInput).toHaveFocus();
-
-      await user.click(document.body);
-      expect(passwordInput).not.toHaveFocus();
-      expect(passwordInput).toBeInvalid();
-      expect(passwordInput).toHaveAccessibleDescription(/password/i);
-
-      await user.click(passwordInput);
-      await user.keyboard("TightYeah!123");
-      expect(passwordInput).not.toBeInvalid();
-      expect(passwordInput).not.toHaveAccessibleDescription();
-    });
   });
 
   describe("Submit button", () => {
@@ -129,7 +112,7 @@ describe("Username sign in form", () => {
 
   beforeEach(async () => {
     const user = userEvent.setup();
-    renderTestRouter("/sign-in");
+    renderTestRouter({ initialLocation: "/sign-in" });
     const usernameTab = await screen.findByRole("tab", {
       name: /(?:with|by|via) username/i,
     });

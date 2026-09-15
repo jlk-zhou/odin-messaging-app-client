@@ -86,31 +86,4 @@ describe("Delete warning dialog", () => {
     });
     expect(passwordInput).toBeInTheDocument();
   });
-
-  it("validates password input on touch", async () => {
-    const user = userEvent.setup();
-
-    // Select the password input and type a password
-    const passwordInput = await screen.findByLabelText(/password/i, {
-      selector: "input",
-    });
-    await user.type(passwordInput, "VerySecurePassword");
-
-    // Unfocus the input
-    await user.tab();
-    expect(passwordInput).not.toHaveFocus();
-
-    // Focus back and delete some characters
-    await user.click(passwordInput);
-    expect(passwordInput).toHaveFocus();
-    for (let i = 0; i < 12; i++) {
-      await user.keyboard("[Backspace]");
-    }
-
-    // The password should now be too short thus making input invalid
-    expect(passwordInput).toBeInvalid();
-
-    // And shows an error message
-    expect(passwordInput).toHaveAccessibleDescription(/password/i);
-  });
 });

@@ -24,6 +24,7 @@ export default function ChangePassword({
 }: ChangePasswordProps) {
   const form = useForm<z.infer<typeof changePasswordSchema>>({
     resolver: zodResolver(changePasswordSchema),
+    mode: "onTouched",
     defaultValues: {
       currentPassword: "",
     },

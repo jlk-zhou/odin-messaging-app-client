@@ -195,63 +195,11 @@ describe("Sign up form", () => {
     it("exists", () => {
       expect(passwordInput).toBeInTheDocument();
     });
-
-    it("becomes invalid for invalid passwords", async () => {
-      const user = await userEvent.setup();
-
-      await user.click(passwordInput);
-      expect(passwordInput).toHaveFocus();
-
-      await user.click(document.body);
-      expect(passwordInput).not.toHaveFocus();
-      expect(passwordInput).toBeInvalid();
-
-      expect(passwordInput).toHaveAccessibleDescription(/password/i);
-
-      await user.click(passwordInput);
-      await user.keyboard("tight");
-      expect(passwordInput).toBeInvalid();
-      expect(passwordInput).toHaveAccessibleDescription(/password/i);
-
-      await user.keyboard("Tight");
-      expect(passwordInput).toBeInvalid();
-      expect(passwordInput).toHaveAccessibleDescription(/password/i);
-
-      await user.keyboard("TightYeah!123");
-      expect(passwordInput).not.toBeInvalid();
-      expect(passwordInput).not.toHaveAccessibleDescription();
-    });
   });
 
   describe("Confirm password input", () => {
     it("exists", () => {
       expect(confirmPasswordInput).toBeInTheDocument();
-    });
-
-    it("becomes invalid when passwords do not match", async () => {
-      const user = await userEvent.setup();
-
-      await user.type(nameInput, "Tuco");
-      await user.type(emailInput, "tuco@sal.bad");
-      await user.type(usernameInput, "toxictuco");
-      await user.type(passwordInput, "TightightightYeah!123");
-
-      await user.click(confirmPasswordInput);
-      expect(confirmPasswordInput).toHaveFocus();
-      await user.click(document.body);
-      expect(confirmPasswordInput).not.toHaveFocus();
-      expect(confirmPasswordInput).toBeInvalid();
-      expect(confirmPasswordInput).toHaveAccessibleDescription(/password/i);
-
-      await user.click(confirmPasswordInput);
-      await user.keyboard("Tightightight");
-      expect(confirmPasswordInput).toBeInvalid();
-      expect(confirmPasswordInput).toHaveAccessibleDescription(/match/i);
-
-      await user.click(confirmPasswordInput);
-      await user.keyboard("Yeah!123");
-      expect(confirmPasswordInput).not.toBeInvalid();
-      expect(confirmPasswordInput).not.toHaveAccessibleDescription();
     });
   });
 

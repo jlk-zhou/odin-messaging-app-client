@@ -4,12 +4,7 @@ import PasswordFieldComponent from "./index";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { renderComponent } from "#/tests/utils";
-import * as z from "zod";
-import {
-  confirmPasswordSchema,
-  existingPasswordSchema,
-  newPasswordSchema,
-} from "#/routes/util/userFieldSchemas";
+import PasswordsForm from "./PasswordsForm";
 
 describe("Password Field Component", () => {
   let passwordField: HTMLInputElement;
@@ -76,19 +71,85 @@ describe("Confirm Password Field Component", () => {
 });
 
 describe("Password Field Input Validation UI", () => {
-  const formSchema = z
-    .object({
-      password: existingPasswordSchema,
-      newPassword: newPasswordSchema,
-      confirmPassword: confirmPasswordSchema,
-    })
-    .refine(
-      (data) => {
-        return data.newPassword === data.confirmPassword;
-      },
-      {
-        path: ["confirmPassword"],
-        message: "Passwords must match.",
-      },
-    );
+  beforeEach(() => {
+    renderComponent(<PasswordsForm />);
+  });
+
+  it("renders the form properly", async () => {
+    const heading = await screen.findByRole("heading", {
+      name: /password form/i,
+    });
+    expect(heading).toBeInTheDocument();
+    screen.debug();
+  });
+
+  it("has a current password field that becomes invalid for invalid input", async () => {
+    const user = await userEvent.setup();
+    const passwordInput = await screen.findByLabelText(/^password/i);
+
+    await user.click(passwordInput);
+    expect(passwordInput).toHaveFocus();
+
+    await user.click(document.body);
+    expect(passwordInput).not.toHaveFocus();
+    expect(passwordInput).toBeInvalid();
+    expect(passwordInput).toHaveAccessibleDescription(/password/i);
+
+    await user.click(passwordInput);
+    await user.keyboard("TightYeah!123");
+    expect(passwordInput).not.toBeInvalid();
+    expect(passwordInput).not.toHaveAccessibleDescription();
+  });
+
+  it("has a new password field that becomes invalid for invalid new password", async () => {
+    const user = await userEvent.setup();
+    const passwordInput = await screen.findByLabelText(/new password/i);
+
+    await user.click(passwordInput);
+    expect(passwordInput).toHaveFocus();
+
+    await user.click(document.body);
+    expect(passwordInput).not.toHaveFocus();
+    expect(passwordInput).toBeInvalid();
+    expect(passwordInput).toHaveAccessibleDescription(/password/i);
+
+    await user.click(passwordInput);
+    await user.keyboard("tight");
+    expect(passwordInput).toBeInvalid();
+    expect(passwordInput).toHaveAccessibleDescription(/password/i);
+
+    await user.keyboard("Tight");
+    expect(passwordInput).toBeInvalid();
+    expect(passwordInput).toHaveAccessibleDescription(/password/i);
+
+    await user.keyboard("TightYeah!123");
+    expect(passwordInput).not.toBeInvalid();
+    expect(passwordInput).not.toHaveAccessibleDescription();
+  });
+
+  it("has a password confirmation field that becomes invalid for failed confirmation ", async () => {
+    const user = await userEvent.setup();
+    const passwordInput = await screen.findByLabelText(/new password/i);
+    const confirmPasswordInput =
+      await screen.findByLabelText(/confirm password/i);
+
+    await user.type(passwordInput, "TightightightYeah!123");
+
+    await user.click(confirmPasswordInput);
+    expect(confirmPasswordInput).toHaveFocus();
+    await user.click(document.body);
+    expect(confirmPasswordInput).not.toHaveFocus();
+    expect(confirmPasswordInput).toBeInvalid();
+    expect(confirmPasswordInput).toHaveAccessibleDescription(/password/i);
+
+    await user.click(confirmPasswordInput);
+    await user.keyboard("Tightightight");
+    expect(confirmPasswordInput).toBeInvalid();
+    expect(confirmPasswordInput).toHaveAccessibleDescription(/match/i);
+
+    await user.click(confirmPasswordInput);
+    await user.keyboard("Yeah!123");
+    expect(confirmPasswordInput).not.toBeInvalid();
+    expect(confirmPasswordInput).not.toHaveAccessibleDescription();
+  });
 });

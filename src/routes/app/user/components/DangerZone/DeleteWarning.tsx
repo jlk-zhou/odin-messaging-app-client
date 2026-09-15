@@ -10,7 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import PasswordField from "#/routes/components/PasswordField";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
-import { passwordFormSchema } from "./passwordFormSchema";
+import { passwordFormSchema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "#/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";

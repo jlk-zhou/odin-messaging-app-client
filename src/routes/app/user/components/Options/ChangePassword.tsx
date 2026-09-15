@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { Controller, useForm } from "react-hook-form";
-import { changePasswordSchema } from "./changePasswordSchema";
+import { changePasswordSchema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import Button from "@mui/material/Button";

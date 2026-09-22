@@ -48,7 +48,7 @@ export default function DeleteWarning({
       },
     });
     if (response.error?.code === "INVALID_PASSWORD") {
-      form.setError("password", { message: "Your password is incorrect." });
+      form.setError("password", { message: "Incorrect password." });
     }
   }
 

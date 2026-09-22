@@ -12,6 +12,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import PasswordField from "#/routes/components/PasswordField";
+import { authClient } from "#/lib/auth-client";
 
 interface ChangePasswordProps {
   open: boolean;
@@ -32,8 +33,17 @@ export default function ChangePassword({
     },
   });
 
-  function onSubmit(data: z.infer<typeof changePasswordSchema>) {
-    console.log(data);
+  async function onSubmit(data: z.infer<typeof changePasswordSchema>) {
+    const response = await authClient.changePassword({
+      newPassword: data.newPassword,
+      currentPassword: data.currentPassword,
+      revokeOtherSessions: true,
+    });
+    if (response.error?.code === "INVALID_PASSWORD") {
+      form.setError("currentPassword", { message: "Incorrect password." });
+      return;
+    }
+    handleClose();
   }
 
   function handleClose() {
@@ -101,12 +111,12 @@ export default function ChangePassword({
               />
             )}
           />
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button type="submit">Change Password</Button>
+          </DialogActions>
         </form>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button>Change Password</Button>
-      </DialogActions>
     </Dialog>
   );
 }

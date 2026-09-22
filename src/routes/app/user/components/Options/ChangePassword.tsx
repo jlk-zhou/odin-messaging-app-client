@@ -17,10 +17,14 @@ import { authClient } from "#/lib/auth-client";
 interface ChangePasswordProps {
   open: boolean;
   setDialogState: (value: React.SetStateAction<boolean>) => void;
+  setAlertOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setAlertMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function ChangePassword({
   open,
+  setAlertOpen,
+  setAlertMessage,
   setDialogState,
 }: ChangePasswordProps) {
   const form = useForm<z.infer<typeof changePasswordSchema>>({
@@ -48,6 +52,8 @@ export default function ChangePassword({
 
   function handleClose() {
     form.reset();
+    setAlertOpen(true);
+    setAlertMessage("Successfully changed password. ");
     setDialogState(false);
   }
 

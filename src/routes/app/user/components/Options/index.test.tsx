@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderComponent } from "#/tests/utils";
 import { screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
@@ -8,7 +8,13 @@ import userEvent from "@testing-library/user-event";
 
 describe("Change password option", () => {
   beforeEach(async () => {
-    renderComponent(<Options username="testing" />);
+    renderComponent(
+      <Options
+        username="testing"
+        setAlertOpen={vi.fn()}
+        setAlertMessage={vi.fn()}
+      />,
+    );
     const user = await userEvent.setup();
     const changePasswordButton = await screen.findByRole("button", {
       name: /change password/i,
@@ -101,7 +107,13 @@ describe("Change password option", () => {
 
 describe("Log out option", () => {
   beforeEach(() => {
-    renderComponent(<Options username={"testing"} />);
+    renderComponent(
+      <Options
+        setAlertOpen={vi.fn()}
+        setAlertMessage={vi.fn()}
+        username={"testing"}
+      />,
+    );
   });
   it("renders the log out button", async () => {
     const logOutButton = await screen.findByRole("button", {

@@ -1,20 +1,13 @@
-import React from "react";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import ConfirmLogOut from "./ConfirmLogOut";
+import ConfirmSignOut from "./ConfirmSignOut";
 import ChangePassword from "./ChangePassword";
 
 interface OptionsProps {
   username: string;
-  setAlertOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setAlertMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function Options({
-  username,
-  setAlertOpen,
-  setAlertMessage,
-}: OptionsProps) {
+export default function Options({ username }: OptionsProps) {
   const [changePasswordOpen, setChangePasswordOpen] = useState(false);
   function handleChangePasswordClick() {
     setChangePasswordOpen(true);
@@ -40,13 +33,11 @@ export default function Options({
       <ChangePassword
         open={changePasswordOpen}
         setDialogState={setChangePasswordOpen}
-        setAlertOpen={setAlertOpen}
-        setAlertMessage={setAlertMessage}
       />
       <Button variant="contained" onClick={handleLogOutClick}>
-        Log Out
+        Sign Out
       </Button>
-      <ConfirmLogOut
+      <ConfirmSignOut
         open={logOutOpen}
         handleClose={handleLogOutClose}
         username={username}

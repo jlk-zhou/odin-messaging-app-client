@@ -3,7 +3,7 @@ import Snackbar, { type SnackbarCloseReason } from "@mui/material/Snackbar";
 
 interface NotificationProps {
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: Function;
   message: string;
 }
 

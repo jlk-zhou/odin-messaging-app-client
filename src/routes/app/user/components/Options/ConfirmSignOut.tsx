@@ -6,20 +6,25 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useNotification } from "#/routes/components/Notification/store";
 
-interface ConfirmLogOutProps {
+interface ConfirmSignOutProps {
   open: boolean;
   handleClose: () => void;
   username: string;
 }
 
-export default function ConfirmLogOut({
+export default function ConfirmSignOut({
   open,
   handleClose,
   username,
-}: ConfirmLogOutProps) {
+}: ConfirmSignOutProps) {
   const navigate = useNavigate({ from: "/app/user/" });
   const [isSigningOut, setIsSigningOut] = useState(false);
+
+  const setOpen = useNotification((state) => state.setOpen);
+  const setMessage = useNotification((state) => state.setMessage);
+
   async function handleClick() {
     await authClient.signOut({
       fetchOptions: {
@@ -28,10 +33,13 @@ export default function ConfirmLogOut({
         },
         onSuccess: () => {
           navigate({ to: "/sign-in" });
+          setOpen(true);
+          setMessage("Signed out successfully.");
         },
       },
     });
   }
+
   return (
     <Dialog
       open={open}
@@ -39,11 +47,11 @@ export default function ConfirmLogOut({
       aria-labelledby="dialog-title"
       role="alertdialog"
     >
-      <DialogTitle id="dialog-title">Log out from @{username}?</DialogTitle>
+      <DialogTitle id="dialog-title">Sign out from @{username}?</DialogTitle>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
         <Button loading={isSigningOut} onClick={handleClick}>
-          Log Out
+          Sign Out
         </Button>
       </DialogActions>
     </Dialog>

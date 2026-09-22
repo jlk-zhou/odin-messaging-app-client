@@ -13,18 +13,15 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import PasswordField from "#/routes/components/PasswordField";
 import { authClient } from "#/lib/auth-client";
+import { useNotification } from "#/routes/components/Notification/store";
 
 interface ChangePasswordProps {
   open: boolean;
   setDialogState: (value: React.SetStateAction<boolean>) => void;
-  setAlertOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setAlertMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function ChangePassword({
   open,
-  setAlertOpen,
-  setAlertMessage,
   setDialogState,
 }: ChangePasswordProps) {
   const form = useForm<z.infer<typeof changePasswordSchema>>({
@@ -37,6 +34,9 @@ export default function ChangePassword({
     },
   });
 
+  const setAlertOpen = useNotification((state) => state.setOpen);
+  const setAlertMessage = useNotification((state) => state.setMessage);
+
   async function onSubmit(data: z.infer<typeof changePasswordSchema>) {
     const response = await authClient.changePassword({
       newPassword: data.newPassword,
@@ -47,13 +47,13 @@ export default function ChangePassword({
       form.setError("currentPassword", { message: "Incorrect password." });
       return;
     }
+    setAlertOpen(true);
+    setAlertMessage("Successfully changed password. ");
     handleClose();
   }
 
   function handleClose() {
     form.reset();
-    setAlertOpen(true);
-    setAlertMessage("Successfully changed password. ");
     setDialogState(false);
   }
 

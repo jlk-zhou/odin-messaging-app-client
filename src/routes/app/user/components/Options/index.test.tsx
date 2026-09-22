@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { renderComponent } from "#/tests/utils";
 import { screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
@@ -8,13 +8,7 @@ import userEvent from "@testing-library/user-event";
 
 describe("Change password option", () => {
   beforeEach(async () => {
-    renderComponent(
-      <Options
-        username="testing"
-        setAlertOpen={vi.fn()}
-        setAlertMessage={vi.fn()}
-      />,
-    );
+    renderComponent(<Options username="testing" />);
     const user = await userEvent.setup();
     const changePasswordButton = await screen.findByRole("button", {
       name: /change password/i,
@@ -105,43 +99,37 @@ describe("Change password option", () => {
   });
 });
 
-describe("Log out option", () => {
+describe("Sign out option", () => {
   beforeEach(() => {
-    renderComponent(
-      <Options
-        setAlertOpen={vi.fn()}
-        setAlertMessage={vi.fn()}
-        username={"testing"}
-      />,
-    );
+    renderComponent(<Options username={"testing"} />);
   });
-  it("renders the log out button", async () => {
+  it("renders the sign out button", async () => {
     const logOutButton = await screen.findByRole("button", {
-      name: /log out/i,
+      name: /sign out/i,
     });
     expect(logOutButton).toBeInTheDocument();
   });
 
-  it("pops up a confirmation dialog after log out button is clicked", async () => {
+  it("pops up a confirmation dialog after sign out button is clicked", async () => {
     const user = userEvent.setup();
     const logOutButton = await screen.findByRole("button", {
-      name: /log out/i,
+      name: /sign out/i,
     });
     await user.click(logOutButton);
     const confirmationDialog = await screen.findByRole("heading", {
-      name: /log out from.*\?/i,
+      name: /sign out from.*\?/i,
     });
     expect(confirmationDialog).toBeInTheDocument();
   });
 
-  it("allows closing log out confirmation dialog with button", async () => {
+  it("allows closing sign out confirmation dialog with button", async () => {
     const user = userEvent.setup();
     const logOutButton = await screen.findByRole("button", {
-      name: /log out/i,
+      name: /sign out/i,
     });
     await user.click(logOutButton);
     const confirmationDialog = await screen.findByRole("heading", {
-      name: /log out from.*\?/i,
+      name: /sign out from.*\?/i,
     });
     const closeButton = await screen.findByRole("button", {
       name: /cancel/i,

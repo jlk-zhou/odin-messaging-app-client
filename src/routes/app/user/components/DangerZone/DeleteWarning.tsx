@@ -14,6 +14,7 @@ import { passwordFormSchema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "#/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
+import { useNotification } from "#/routes/components/Notification/store";
 
 interface DeleteWarningProps {
   open: boolean;
@@ -34,6 +35,9 @@ export default function DeleteWarning({
     },
   });
 
+  const setAlertOpen = useNotification((state) => state.setOpen);
+  const setAlertMessage = useNotification((state) => state.setMessage);
+
   function handleClose() {
     form.reset();
     setDialogState(false);
@@ -44,7 +48,11 @@ export default function DeleteWarning({
     const response = await authClient.deleteUser({
       password: data.password,
       fetchOptions: {
-        onSuccess: () => navigate({ to: "/sign-in" }),
+        onSuccess: () => {
+          navigate({ to: "/sign-in" });
+          setAlertMessage("You account has been deleted. Sorry to see you go!");
+          setAlertOpen(true);
+        },
       },
     });
     if (response.error?.code === "INVALID_PASSWORD") {

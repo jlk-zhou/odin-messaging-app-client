@@ -6,6 +6,8 @@ import {
   redirect,
 } from "@tanstack/react-router";
 
+import Welcome from "./components/Welcome";
+
 export async function protectRoute({ location }: any) {
   try {
     const { data: session, error } = await authClient.getSession();
@@ -37,6 +39,9 @@ export async function protectRoute({ location }: any) {
 export const Route = createFileRoute("/app")({
   component: AppLayout,
   beforeLoad: protectRoute,
+  loader: ({ context }) => {
+    return context.session.user;
+  },
 });
 
 /**
@@ -48,8 +53,13 @@ export const Route = createFileRoute("/app")({
  * @returns A React component for the app's layout.
  */
 function AppLayout() {
+  const user = Route.useLoaderData();
   return (
     <div className="flex">
+      <Welcome
+        className="hidden h-full w-full overflow-y-auto overscroll-contain border sm:block sm:max-w-4/9 sm:min-w-4/9 md:w-2/5 lg:w-1/3"
+        userImage={user.image}
+      />
       <Outlet />
     </div>
   );

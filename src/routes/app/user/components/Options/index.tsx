@@ -5,9 +5,10 @@ import ChangePassword from "./ChangePassword";
 
 interface OptionsProps {
   username: string;
+  className?: string;
 }
 
-export default function Options({ username }: OptionsProps) {
+export default function Options({ username, className }: OptionsProps) {
   const [changePasswordOpen, setChangePasswordOpen] = useState(false);
   function handleChangePasswordClick() {
     setChangePasswordOpen(true);
@@ -22,7 +23,7 @@ export default function Options({ username }: OptionsProps) {
   }
 
   return (
-    <div className="my-5 flex flex-col gap-3">
+    <div className={`my-5 flex flex-col gap-3 ${className}`}>
       <Button
         variant="contained"
         className="w-45"

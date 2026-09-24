@@ -23,7 +23,7 @@ export default function EditInfoContainer({
         className="col-start-5 bg-transparent p-0"
         aria-label={`Edit ${info}`}
       >
-        <EditIcon className="hidden cursor-pointer fill-black group-hover:block" />
+        <EditIcon className="cursor-pointer fill-black md:hidden md:group-hover:block" />
       </Button>
     </div>
   );

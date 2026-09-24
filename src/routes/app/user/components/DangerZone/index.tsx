@@ -4,16 +4,17 @@ import DeleteWarning from "./DeleteWarning";
 
 interface DangerZoneProps {
   username: string;
+  className?: string;
 }
 
-export default function DangerZone({ username }: DangerZoneProps) {
+export default function DangerZone({ username, className }: DangerZoneProps) {
   const [deleteWarningOpen, setDeleteWarningOpen] = useState(false);
   function handleClickOpen() {
     setDeleteWarningOpen(true);
   }
 
   return (
-    <div className="w-full">
+    <div className={`w-full ${className}`}>
       <h2 className="text-red-500">Danger Zone!</h2>
       <hr className="mb-5 text-red-500" />
       <div className="flex w-full justify-center">

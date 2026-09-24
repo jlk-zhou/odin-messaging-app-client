@@ -1,5 +1,6 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 
+import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import MainProfile from "../MainProfile";
@@ -23,21 +24,22 @@ interface MyInfoPageProps {
 }
 
 export default function MyInfoPage({ user }: MyInfoPageProps) {
+  const router = useRouter();
+
   return (
-    <div className="flex min-h-screen w-screen flex-col items-center p-3">
-      <div className="grid w-full grid-cols-[50px_1fr_50px]">
-        <Link className="place-self-center" to="/app">
-          <ArrowBackIcon className="fill-black" />
-        </Link>
-      </div>
+    <div className="flex h-screen w-full flex-col items-center overflow-y-auto overscroll-contain p-3">
+      <Button className="self-start" onClick={() => router.history.back()}>
+        <ArrowBackIcon className="fill-black" />
+      </Button>
       <MainProfile
         image={user.image as string | undefined}
         fullName={user.name}
         username={user.username}
+        className="my-12"
       />
       <UserDetails email={user.email} bio={user.bio} />
-      <Options username={user.username as string} />
-      <DangerZone username={user.username as string} />
+      <Options className="my-15" username={user.username as string} />
+      <DangerZone className="my-12" username={user.username as string} />
     </div>
   );
 }

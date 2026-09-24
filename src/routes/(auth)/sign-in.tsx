@@ -39,7 +39,7 @@ function SignIn() {
 
   return (
     <AuthFormContainer>
-      <h1 className="mb-6 text-center text-2xl font-bold md:text-3xl">
+      <h1 className="mb-6 text-center text-2xl font-bold sm:text-3xl">
         Sign In
       </h1>
       {formError && <Alert severity="error">{formError}</Alert>}
@@ -58,7 +58,7 @@ function SignIn() {
           form={emailForm}
           mode={"email"}
           onSubmit={onEmailFormSubmit}
-          className="w-full md:min-w-90"
+          className="w-full"
         />
       </TabPanel>
       <TabPanel className="w-full" value={value} index={1}>
@@ -66,12 +66,12 @@ function SignIn() {
           form={usernameForm}
           mode={"username"}
           onSubmit={onUsernameFormSubmit}
-          className="w-full md:min-w-90"
+          className="w-full"
         />
       </TabPanel>
       <p className="mt-12 text-center">
         Don't have an account?{" "}
-        <Link className="hover:underline text-sky-600" to={signUpRoute.to}>
+        <Link className="text-sky-600 hover:underline" to={signUpRoute.to}>
           Sign Up
         </Link>
       </p>

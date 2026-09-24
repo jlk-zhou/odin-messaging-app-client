@@ -3,11 +3,12 @@ import Avatar from "@mui/material/Avatar";
 
 interface WelcomeProps {
   userImage?: string | null | undefined;
+  className?: string;
 }
 
-export default function Welcome({ userImage }: WelcomeProps) {
+export default function Welcome({ userImage, className }: WelcomeProps) {
   return (
-    <div className="flex min-h-screen w-screen p-6">
+    <div className={`flex h-screen p-6 ${className}`}>
       <div className="grid h-24 w-full grid-cols-4 grid-rows-2">
         <Link
           className="row-span-2 mt-3 justify-self-center"

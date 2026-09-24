@@ -1,23 +1,23 @@
-import React from 'react'
+import React from "react";
 
-import Container from '@mui/material/Container'
-import Paper from '@mui/material/Paper'
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
 
 interface AuthFormContainerProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function AuthFormContainer({
   children,
 }: AuthFormContainerProps) {
   return (
-    <Container className="flex min-h-screen max-w-100 flex-col px-3 py-15 md:max-w-170 md:items-center md:justify-center md:py-0">
+    <Container className="my-22 flex max-w-screen flex-col min-[475px]:px-10 sm:m-0 sm:h-screen sm:items-center sm:justify-center">
       <Paper
-        className="my-10 contents min-h-150 md:block md:p-12"
+        className="contents min-h-170 px-8 pt-18 sm:block sm:min-w-100 md:min-w-110 md:px-12 lg:min-w-135"
         elevation={3}
       >
         {children}
       </Paper>
     </Container>
-  )
+  );
 }

@@ -16,6 +16,10 @@ export const Route = createFileRoute("/app/")({
  */
 function Index() {
   const user = Route.useLoaderData();
-
-  return <Welcome userImage={user.image} />;
+  return (
+    <>
+      <Welcome className="block sm:hidden" userImage={user.image} />
+      <div className="hidden sm:block">All the chats will appear here</div>
+    </>
+  );
 }

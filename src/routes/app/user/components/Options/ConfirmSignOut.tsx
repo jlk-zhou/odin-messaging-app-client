@@ -5,7 +5,11 @@ import { authClient } from "#/lib/auth-client";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+
 import { useNotification } from "#/routes/components/Notification/store";
 
 interface ConfirmSignOutProps {
@@ -47,13 +51,34 @@ export default function ConfirmSignOut({
       aria-labelledby="dialog-title"
       role="alertdialog"
     >
-      <DialogTitle id="dialog-title">Sign out from @{username}?</DialogTitle>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button loading={isSigningOut} onClick={handleClick}>
-          Sign Out
-        </Button>
-      </DialogActions>
+      <div className="flex max-w-80 flex-col gap-5 p-4">
+        <div className="flex w-full justify-between">
+          <DialogTitle className="mx-2 p-0">Sign Out</DialogTitle>
+          <IconButton className="p-0" aria-label="close" onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+        <DialogContent className="px-5 py-0">
+          Sign out from @{username}?
+        </DialogContent>
+        <DialogActions className="flex flex-col gap-3">
+          <Button
+            variant="contained"
+            className="m-0 w-full max-w-30"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            className="m-0 w-full max-w-30"
+            loading={isSigningOut}
+            onClick={handleClick}
+          >
+            Sign Out
+          </Button>
+        </DialogActions>
+      </div>
     </Dialog>
   );
 }

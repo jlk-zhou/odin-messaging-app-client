@@ -62,59 +62,64 @@ export default function DeleteWarning({
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle sx={{ m: 0, p: 2 }}>Delete Account @{username}?</DialogTitle>
-      <IconButton
-        aria-label="close"
-        onClick={handleClose}
-        sx={(theme) => ({
-          position: "absolute",
-          right: 8,
-          top: 8,
-          color: theme.palette.grey[500],
-        })}
-      >
-        <CloseIcon />
-      </IconButton>
-      <DialogContent>
-        <DialogContentText>
-          Your account information and all of your messages will be deleted.
-        </DialogContentText>
-        <DialogContentText>
-          This action is permanent and irreversible.
-        </DialogContentText>
-        <DialogContentText>
-          To proceed, enter your password below.
-        </DialogContentText>
-        <form
-          method="post"
-          onSubmit={form.handleSubmit(onSubmit)}
-          id="confirm-by-password"
-        >
-          <Controller
-            name="password"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <PasswordField
-                {...field}
-                className="mt-3 w-full"
-                fieldState={fieldState}
-              />
-            )}
-          />
-        </form>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} variant="contained">
-          No
-        </Button>
-        <Button
-          loading={form.formState.isSubmitting}
-          type="submit"
-          form="confirm-by-password"
-        >
-          Yes, I understand and wish to proceed
-        </Button>
-      </DialogActions>
+      <div className="flex max-w-100 flex-col gap-5 p-4">
+        <div className="flex w-full justify-between">
+          <DialogTitle className="p-0">Delete Account?</DialogTitle>
+          <IconButton className="p-0" aria-label="close" onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+        <DialogContent className="flex flex-col gap-2 p-0">
+          <DialogContentText>
+            You are about to delete your account{" "}
+            <span className="font-bold">@{username}</span>.
+          </DialogContentText>
+          <DialogContentText>
+            Your account information and all of your messages will be deleted.
+          </DialogContentText>
+          <DialogContentText className="font-bold">
+            This action is permanent and irreversible.
+          </DialogContentText>
+          <DialogContentText>
+            To delete your account, please enter your password below.
+          </DialogContentText>
+          <form
+            method="post"
+            onSubmit={form.handleSubmit(onSubmit)}
+            id="confirm-by-password"
+          >
+            <Controller
+              name="password"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <PasswordField
+                  {...field}
+                  className="mt-3 w-full"
+                  fieldState={fieldState}
+                />
+              )}
+            />
+          </form>
+        </DialogContent>
+        <DialogActions className="flex flex-col gap-3">
+          <Button
+            onClick={handleClose}
+            variant="contained"
+            className="m-0 w-full max-w-55"
+          >
+            Cancel
+          </Button>
+          <Button
+            loading={form.formState.isSubmitting}
+            type="submit"
+            form="confirm-by-password"
+            variant="contained"
+            className="m-0 w-full max-w-55 bg-red-700 hover:bg-red-800"
+          >
+            I understand and wish to delete my account
+          </Button>
+        </DialogActions>
+      </div>
     </Dialog>
   );
 }

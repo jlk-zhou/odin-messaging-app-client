@@ -23,7 +23,9 @@ export default function Options({ username, className }: OptionsProps) {
   }
 
   return (
-    <div className={`my-5 flex flex-col gap-3 ${className}`}>
+    <div
+      className={`my-5 flex w-full flex-col items-center gap-3 ${className}`}
+    >
       <Button
         variant="contained"
         className="w-45"
@@ -35,7 +37,7 @@ export default function Options({ username, className }: OptionsProps) {
         open={changePasswordOpen}
         setDialogState={setChangePasswordOpen}
       />
-      <Button variant="contained" onClick={handleLogOutClick}>
+      <Button variant="contained" className="w-45" onClick={handleLogOutClick}>
         Sign Out
       </Button>
       <ConfirmSignOut

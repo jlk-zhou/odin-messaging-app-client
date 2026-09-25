@@ -18,7 +18,7 @@ function Index() {
   const user = Route.useLoaderData();
   return (
     <>
-      <Welcome className="block sm:hidden" userImage={user.image} />
+      <Welcome className="block w-full sm:hidden" userImage={user.image} />
       <div className="hidden sm:block">All the chats will appear here</div>
     </>
   );

@@ -59,70 +59,82 @@ export default function ChangePassword({
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle sx={{ m: 0, p: 2 }}>Changing Password</DialogTitle>
-      <IconButton
-        aria-label="close"
-        onClick={handleClose}
-        sx={(theme) => ({
-          position: "absolute",
-          right: 8,
-          top: 8,
-          color: theme.palette.grey[500],
-        })}
-      >
-        <CloseIcon />
-      </IconButton>
-      <DialogContent>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <DialogContentText>
-            To change your password, you will need to enter your current
-            password.
-          </DialogContentText>
-          <Controller
-            name="currentPassword"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <PasswordField
-                {...field}
-                className="w-full"
-                fieldState={fieldState}
-              />
-            )}
-          />
-          <DialogContentText>Please enter your new password:</DialogContentText>
-          <Controller
-            name="newPassword"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <PasswordField
-                {...field}
-                className="w-full"
-                fieldState={fieldState}
-                isNew={true}
-              />
-            )}
-          />
-          <DialogContentText>
-            Please confirm your new password:
-          </DialogContentText>
-          <Controller
-            name="confirmPassword"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <PasswordField
-                {...field}
-                className="w-full"
-                fieldState={fieldState}
-                confirming={true}
-              />
-            )}
-          />
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Change Password</Button>
-          </DialogActions>
-        </form>
-      </DialogContent>
+      <div className="flex max-w-100 flex-col gap-5 p-4">
+        <div className="flex w-full justify-between">
+          <DialogTitle className="mx-2 p-0">Changing Password</DialogTitle>
+          <IconButton className="p-0" aria-label="close" onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+        <DialogContent className="p-0">
+          <form
+            className="flex flex-col gap-2"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <DialogContentText>
+              To change your password, you will need to enter your current
+              password.
+            </DialogContentText>
+            <Controller
+              name="currentPassword"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <PasswordField
+                  {...field}
+                  className="w-full"
+                  fieldState={fieldState}
+                />
+              )}
+            />
+            <DialogContentText>
+              Please enter your new password:
+            </DialogContentText>
+            <Controller
+              name="newPassword"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <PasswordField
+                  {...field}
+                  className="w-full"
+                  fieldState={fieldState}
+                  isNew={true}
+                />
+              )}
+            />
+            <DialogContentText>
+              Please confirm your new password:
+            </DialogContentText>
+            <Controller
+              name="confirmPassword"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <PasswordField
+                  {...field}
+                  className="w-full"
+                  fieldState={fieldState}
+                  confirming={true}
+                />
+              )}
+            />
+            <DialogActions className="flex flex-col gap-3">
+              <Button
+                variant="contained"
+                className="w-full max-w-45"
+                onClick={handleClose}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                className="m-0 w-full max-w-45"
+                type="submit"
+              >
+                Change Password
+              </Button>
+            </DialogActions>
+          </form>
+        </DialogContent>
+      </div>
     </Dialog>
   );
 }

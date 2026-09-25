@@ -19,7 +19,7 @@ export default function MainProfile({
   return (
     <div className={`my-4 flex flex-col items-center ${className}`}>
       {/* Avatar module */}
-      <div className="group relative my-2 flex h-fit w-fit flex-col items-center justify-center gap-6 md:cursor-pointer">
+      <div className="group relative my-2 flex h-fit flex-col items-center justify-center gap-6 md:cursor-pointer">
         <Avatar
           className="size-30 md:group-hover:brightness-50"
           role="img"

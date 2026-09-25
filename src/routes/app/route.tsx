@@ -6,7 +6,7 @@ import {
   redirect,
 } from "@tanstack/react-router";
 
-import Welcome from "./components/Welcome";
+import Layout from "./components/Welcome";
 
 export async function protectRoute({ location }: any) {
   try {
@@ -55,8 +55,8 @@ export const Route = createFileRoute("/app")({
 function AppLayout() {
   const user = Route.useLoaderData();
   return (
-    <div className="flex">
-      <Welcome
+    <div className="flex min-w-screen">
+      <Layout
         className="hidden h-full w-full overflow-y-auto overscroll-contain border sm:block sm:max-w-4/9 sm:min-w-4/9 md:w-2/5 lg:w-1/3"
         userImage={user.image}
       />

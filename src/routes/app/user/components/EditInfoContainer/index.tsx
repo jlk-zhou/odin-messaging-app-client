@@ -17,7 +17,7 @@ export default function EditInfoContainer({
   children,
 }: NameContainerProps) {
   return (
-    <div className="group grid grid-cols-5 place-items-center">
+    <div className="group grid w-full grid-cols-5 place-items-center">
       {children}
       <Button
         className="col-start-5 bg-transparent p-0"

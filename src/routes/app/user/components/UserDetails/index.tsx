@@ -12,9 +12,9 @@ export default function UserDetails({
   className,
 }: UserDetailsProps) {
   return (
-    <>
+    <div className={`${className}`}>
       {/* Email */}
-      <div className={`${className}`}>
+      <div>
         <h2 className="ml-2 font-bold">Email</h2>
         <EditInfoContainer info="email">
           <p className="col-span-4 col-start-1 ml-2 self-center justify-self-start">
@@ -31,6 +31,6 @@ export default function UserDetails({
           </p>
         </EditInfoContainer>
       </div>
-    </>
+    </div>
   );
 }

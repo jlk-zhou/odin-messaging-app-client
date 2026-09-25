@@ -28,6 +28,7 @@ export default function ConfirmSignOut({
 
   const setOpen = useNotification((state) => state.setOpen);
   const setMessage = useNotification((state) => state.setMessage);
+  const setSeverity = useNotification((state) => state.setSeverity);
 
   async function handleClick() {
     await authClient.signOut({
@@ -37,8 +38,9 @@ export default function ConfirmSignOut({
         },
         onSuccess: () => {
           navigate({ to: "/sign-in" });
-          setOpen(true);
+          setSeverity("success");
           setMessage("Signed out successfully.");
+          setOpen(true);
         },
       },
     });
@@ -61,17 +63,17 @@ export default function ConfirmSignOut({
         <DialogContent className="px-5 py-0">
           Sign out from @{username}?
         </DialogContent>
-        <DialogActions className="flex flex-col gap-3">
+        <DialogActions className="flex gap-3 max-sm:flex-col sm:items-stretch sm:justify-center">
           <Button
             variant="contained"
-            className="m-0 w-full max-w-30"
+            className="m-0 w-full max-w-30 sm:w-60"
             onClick={handleClose}
           >
             Cancel
           </Button>
           <Button
             variant="contained"
-            className="m-0 w-full max-w-30"
+            className="m-0 w-full max-w-30 sm:w-60"
             loading={isSigningOut}
             onClick={handleClick}
           >

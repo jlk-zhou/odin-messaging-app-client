@@ -4,7 +4,6 @@ import { Route as signUpRoute } from "./sign-up";
 
 import * as _ from "lodash-es";
 
-import Alert from "@mui/material/Alert";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 
@@ -22,7 +21,6 @@ function SignIn() {
   const {
     emailForm,
     usernameForm,
-    formError,
     onEmailFormSubmit,
     onUsernameFormSubmit,
     setFormError,
@@ -42,7 +40,6 @@ function SignIn() {
       <h1 className="mb-6 text-center text-2xl font-bold sm:text-3xl">
         Sign In
       </h1>
-      {formError && <Alert severity="error">{formError}</Alert>}
 
       <Tabs
         value={value}

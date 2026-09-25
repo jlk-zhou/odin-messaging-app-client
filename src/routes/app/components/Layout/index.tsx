@@ -1,22 +1,22 @@
 import { Link } from "@tanstack/react-router";
 import Avatar from "@mui/material/Avatar";
 
-interface WelcomeProps {
+interface LayoutProps {
   userImage?: string | null | undefined;
   className?: string;
 }
 
-export default function Welcome({ userImage, className }: WelcomeProps) {
+export default function Layout({ userImage, className }: LayoutProps) {
   return (
-    <div className={`flex h-screen p-6 ${className}`}>
-      <div className="grid h-24 w-full grid-cols-4 grid-rows-2">
+    <div className={`flex p-6 sm:bg-gray-100 ${className}`}>
+      <div className="grid grid-cols-4 grid-rows-2">
         <Link
-          className="row-span-2 mt-3 justify-self-center"
+          className="group row-span-2 h-fit w-fit place-self-center"
           to="/app/user"
           aria-label="To user info page"
         >
           <Avatar
-            className="size-14"
+            className="size-14 group-hover:brightness-80"
             src={userImage as string | undefined}
             alt="User profile image"
           ></Avatar>

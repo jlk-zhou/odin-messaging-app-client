@@ -17,13 +17,13 @@ export default function EditInfoContainer({
   children,
 }: NameContainerProps) {
   return (
-    <div className="group grid w-full grid-cols-5 place-items-center">
+    <div className="grid w-full grid-cols-5 place-items-center">
       {children}
       <Button
         className="col-start-5 bg-transparent p-0"
         aria-label={`Edit ${info}`}
       >
-        <EditIcon className="cursor-pointer fill-black md:hidden md:group-hover:block" />
+        <EditIcon className="cursor-pointer fill-black" />
       </Button>
     </div>
   );

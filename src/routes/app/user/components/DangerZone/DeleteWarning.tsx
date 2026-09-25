@@ -37,6 +37,7 @@ export default function DeleteWarning({
 
   const setAlertOpen = useNotification((state) => state.setOpen);
   const setAlertMessage = useNotification((state) => state.setMessage);
+  const setAlertSeverity = useNotification((state) => state.setSeverity);
 
   function handleClose() {
     form.reset();
@@ -50,6 +51,7 @@ export default function DeleteWarning({
       fetchOptions: {
         onSuccess: () => {
           navigate({ to: "/sign-in" });
+          setAlertSeverity("success");
           setAlertMessage("You account has been deleted. Sorry to see you go!");
           setAlertOpen(true);
         },
@@ -62,7 +64,7 @@ export default function DeleteWarning({
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <div className="flex max-w-100 flex-col gap-5 p-4">
+      <div className="flex flex-col gap-5 p-6 max-md:max-w-100 md:max-w-120">
         <div className="flex w-full justify-between">
           <DialogTitle className="p-0">Delete Account?</DialogTitle>
           <IconButton className="p-0" aria-label="close" onClick={handleClose}>
@@ -101,7 +103,7 @@ export default function DeleteWarning({
             />
           </form>
         </DialogContent>
-        <DialogActions className="flex flex-col gap-3">
+        <DialogActions className="flex gap-3 max-md:flex-col md:items-stretch">
           <Button
             onClick={handleClose}
             variant="contained"

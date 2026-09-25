@@ -19,25 +19,17 @@ export default function MainProfile({
   return (
     <div className={`my-4 flex flex-col items-center ${className}`}>
       {/* Avatar module */}
-      <div className="group relative my-2 flex h-fit flex-col items-center justify-center gap-6 md:cursor-pointer">
+      <div className="relative my-2 flex h-fit flex-col items-center justify-center gap-6">
         <Avatar
-          className="size-30 md:group-hover:brightness-50"
+          className="size-30"
           role="img"
           aria-label="avatar"
           src={image}
           alt="User avatar"
         ></Avatar>
         {/* For mobile: click the button since one cannot hover */}
-        <Button className="md:hidden" variant="contained">
-          Change Avatar
-        </Button>
+        <Button variant="contained">Change Avatar</Button>
         {/* For medium screen and up: hover and click the avatar itself to change */}
-        <Button
-          className="absolute hidden md:block"
-          aria-label="Edit avatar image"
-        >
-          <CameraAltIcon className="hidden size-12 fill-black md:group-hover:block" />
-        </Button>
       </div>
       {/* Full Name */}
       <EditInfoContainer info="full-name">

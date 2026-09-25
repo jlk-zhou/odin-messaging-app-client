@@ -6,7 +6,7 @@ import {
   redirect,
 } from "@tanstack/react-router";
 
-import Layout from "./components/Welcome";
+import Layout from "./components/Layout";
 
 export async function protectRoute({ location }: any) {
   try {
@@ -57,7 +57,7 @@ function AppLayout() {
   return (
     <div className="flex min-w-screen">
       <Layout
-        className="hidden h-full w-full overflow-y-auto overscroll-contain border sm:block sm:max-w-4/9 sm:min-w-4/9 md:w-2/5 lg:w-1/3"
+        className="hidden h-screen w-full overflow-y-auto overscroll-contain sm:block sm:max-w-4/9 sm:min-w-4/9 md:max-w-2/5 md:min-w-2/5 lg:max-w-1/3 lg:min-w-1/3"
         userImage={user.image}
       />
       <Outlet />

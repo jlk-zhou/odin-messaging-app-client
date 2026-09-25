@@ -36,6 +36,7 @@ export default function ChangePassword({
 
   const setAlertOpen = useNotification((state) => state.setOpen);
   const setAlertMessage = useNotification((state) => state.setMessage);
+  const setAlertSeverity = useNotification((state) => state.setSeverity);
 
   async function onSubmit(data: z.infer<typeof changePasswordSchema>) {
     const response = await authClient.changePassword({
@@ -47,8 +48,9 @@ export default function ChangePassword({
       form.setError("currentPassword", { message: "Incorrect password." });
       return;
     }
-    setAlertOpen(true);
+    setAlertSeverity("success");
     setAlertMessage("Successfully changed password. ");
+    setAlertOpen(true);
     handleClose();
   }
 
@@ -59,7 +61,7 @@ export default function ChangePassword({
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <div className="flex max-w-100 flex-col gap-5 p-4">
+      <div className="flex max-w-100 flex-col gap-5 p-6">
         <div className="flex w-full justify-between">
           <DialogTitle className="mx-2 p-0">Changing Password</DialogTitle>
           <IconButton className="p-0" aria-label="close" onClick={handleClose}>
@@ -116,17 +118,17 @@ export default function ChangePassword({
                 />
               )}
             />
-            <DialogActions className="flex flex-col gap-3">
+            <DialogActions className="flex gap-3 max-sm:flex-col sm:items-stretch sm:justify-center">
               <Button
                 variant="contained"
-                className="w-full max-w-45"
+                className="w-full max-w-45 sm:max-w-30"
                 onClick={handleClose}
               >
                 Cancel
               </Button>
               <Button
                 variant="contained"
-                className="m-0 w-full max-w-45"
+                className="m-0 w-full max-w-45 sm:max-w-30"
                 type="submit"
               >
                 Change Password

@@ -1,16 +1,20 @@
 import Alert from "@mui/material/Alert";
 import Snackbar, { type SnackbarCloseReason } from "@mui/material/Snackbar";
 
+export type Severity = "success" | "info" | "warning" | "error";
+
 interface NotificationProps {
   open: boolean;
   setOpen: Function;
   message: string;
+  severity: Severity;
 }
 
 export default function Notification({
   open,
   setOpen,
   message,
+  severity = "success",
 }: NotificationProps) {
   const handleClose = (
     event: React.SyntheticEvent | Event,
@@ -29,7 +33,7 @@ export default function Notification({
       autoHideDuration={5000}
       onClose={handleClose}
     >
-      <Alert severity="success" onClose={handleClose}>
+      <Alert severity={severity} onClose={handleClose}>
         {message}
       </Alert>
     </Snackbar>

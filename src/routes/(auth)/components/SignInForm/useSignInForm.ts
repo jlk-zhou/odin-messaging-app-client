@@ -7,10 +7,15 @@ import type z from "zod";
 
 import { emailSignInSchema, usernameSignInSchema } from "./schemas";
 import { authClient } from "#/lib/auth-client";
+import { useNotification } from "#/routes/components/Notification/store";
 
 export default function useSignInForm() {
   const navigate = useNavigate({ from: "/sign-in" });
   const [formError, setFormError] = useState<false | string>(false);
+  const setAlertOpen = useNotification((state) => state.setOpen);
+  const setAlertMessage = useNotification((state) => state.setMessage);
+  const setSeverity = useNotification((state) => state.setSeverity);
+
   const emailForm = useForm<z.infer<typeof emailSignInSchema>>({
     resolver: zodResolver(emailSignInSchema),
     mode: "onTouched",
@@ -29,7 +34,9 @@ export default function useSignInForm() {
           navigate({ to: "/app" });
         },
         onError: (ctx) => {
-          setFormError(ctx.error.message);
+          setSeverity("error");
+          setAlertMessage(ctx.error.message);
+          setAlertOpen(true);
         },
       },
     );
@@ -54,7 +61,9 @@ export default function useSignInForm() {
           navigate({ to: "/app" });
         },
         onError: (ctx) => {
-          setFormError(ctx.error.message);
+          setSeverity("error");
+          setAlertMessage(ctx.error.message);
+          setAlertOpen(true);
         },
       },
     );

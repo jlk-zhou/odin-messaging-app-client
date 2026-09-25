@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-
-import Welcome from "./components/Welcome";
+import ForumIcon from "@mui/icons-material/Forum";
+import Layout from "./components/Layout";
 
 export const Route = createFileRoute("/app/")({
   component: Index,
@@ -18,8 +18,11 @@ function Index() {
   const user = Route.useLoaderData();
   return (
     <>
-      <Welcome className="block w-full sm:hidden" userImage={user.image} />
-      <div className="hidden sm:block">All the chats will appear here</div>
+      <Layout className="block w-full sm:hidden" userImage={user.image} />
+      {/* Wider screen default initial appearance when no chat is selected */}
+      <div className="hidden w-full text-[240px] sm:flex sm:items-center sm:justify-center">
+        <ForumIcon fontSize="inherit" className="text-gray-200" />
+      </div>
     </>
   );
 }

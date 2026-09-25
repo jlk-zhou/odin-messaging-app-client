@@ -17,10 +17,16 @@ function RootComponent() {
   const open = useNotification((state) => state.open);
   const setOpen = useNotification((state) => state.setOpen);
   const message = useNotification((state) => state.message);
+  const severity = useNotification((state) => state.severity);
 
   return (
     <>
-      <Notification open={open} setOpen={setOpen} message={message} />
+      <Notification
+        open={open}
+        setOpen={setOpen}
+        message={message}
+        severity={severity}
+      />
       <Outlet />
       {!import.meta.env.TEST && (
         <TanStackDevtools

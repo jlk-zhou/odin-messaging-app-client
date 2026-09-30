@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/api/*"
+  to = "https://odin-messaging-app-server-production-37ad.up.railway.app:splat"
+  status = 200
+  force = true
